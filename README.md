@@ -3,12 +3,13 @@
 <h1 align="center">API 2º Semestre 2022 - Equipe Átomo</h1>
 
 <p align="center">
-  <a href ="#o-projeto">Projeto </a>  • 
+  <a href ="#o-projeto">Projeto </a>  •
   <a href ="#proposta">Proposta </a>  • 
   <a href ="#cronograma-das-sprints">Cronograma das Sprints </a>  • 
-  <a href ="#product-backlog">Product Backlog </a>  •
+  <a href ="#product-backlog">Product Backlog </a> •
   <a href ="#sprints-backlog">Sprints Backlog </a>  •
-  <a href ="#1ª-sprint">Produto</a>  •
+  <a href ="#tecnologias">Tecnologias</a>  •
+  <a href ="#produto">Produto</a>  •
   <a href ="#equipe">Equipe</a> 
 </p>
 
@@ -103,6 +104,6 @@
 |**Ivan Germano**|Desenvolvedor|[@GitHub](https://github.com/Ivan-Duarte)|
 |**João Gabriel**|Desenvolvedor|[@GitHub](https://github.com/JoaoGRMira)|
 |**Rebeca Gama**|Desenvolvedor|[@GitHub](https://github.com/RebecaGama)|
-|**Thiago Bueno**|Desenvolvedor|[@GitHub](https://github.com/)|
+|**Thiago Bueno**|Desenvolvedor|[@GitHub]()|
 
 <br>
