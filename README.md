@@ -24,6 +24,8 @@
 
 ## Proposta
 
+> **Requisitos**
+
 - Cadastro de canais (Marketplaces e Meios de Pagamentos)
 - Configurações de canais
 - Configurações Ativas
