@@ -24,15 +24,23 @@
 
 ## Proposta
 
-> **Requisitos**
+> **Requisitos Funcionais**
 
 - Cadastro de canais (Marketplaces e Meios de Pagamentos)
 - Configurações de canais
 - Configurações Ativas
  
  <br>
+ 
+ > **Requisitos Não Funcionais**
 
-**:link: Clique no link abaixo para visualizar o modelo do site.**  
+- Linguagem Java (requisito Fatec)
+- Banco de Dados Relacional (requisito Fatec)
+- Documentações
+
+<br>
+
+**:link: Clique no link abaixo para visualizar o modelo do projeto.**  
 > [Protótipo](https://www.figma.com/file/CVTjd7Q6JZlAeHtRpOkRzp/PrototipoTrackCash?node-id=0%3A1)
 
 <br>
@@ -55,24 +63,30 @@
 
 <br>
 
+## Tecnologias 
+
+<h1 align="center"> <img src = "" height=800px width=auto></h1> 
+
+<br>
+
 ## Produto
 
-<h3>1ª Sprint</h3>
+<h3>1ª Sprint - 29/08 a 18/09</h3>
 
 
 <br>
 
-<h3>2ª Sprint</h3>
+<h3>2ª Sprint - 19/09 a 09/10</h3>
 
 
 <br>
 
-<h3>3ª Sprint</h3>
+<h3>3ª Sprint - 13/10 a 06/11</h3>
 
 
 <br>
 
-<h3>4ª Sprint</h3>
+<h3>4ª Sprint - 07/11 a 27/11</h3>
 
 
 <br>
