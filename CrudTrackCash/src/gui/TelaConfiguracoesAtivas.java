@@ -40,6 +40,7 @@ public class TelaConfiguracoesAtivas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de autorização");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel1.setText("Olá, seja bem vindo! Aqui você pode visualizar os canais cadastrados na tabela abaixo e");
@@ -256,19 +257,13 @@ public class TelaConfiguracoesAtivas extends javax.swing.JFrame {
     private javax.swing.JButton JButton_add;
     private javax.swing.JButton jButton_ed;
     private javax.swing.JButton jButton_ex;
-    private javax.swing.JButton jButton_pesq;
     private javax.swing.JButton jButton_pesq1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField_pesq;
     private javax.swing.JTextField jTextField_pesq1;
     // End of variables declaration//GEN-END:variables
 }
