@@ -92,7 +92,7 @@
   
 ## :gear: Tecnologias 
 
-<h1 align="center"> <img src = "readme/tecnologias.jpg" height=800px width=auto></h1> 
+<h1 align="center"> <img src = "readme/tecnologias.jpg" height=auto width=800px></h1> 
 
 <br>
 
