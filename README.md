@@ -83,8 +83,10 @@
 <span id="burndown-das-sprints">
 
 ## :chart_with_downwards_trend: Burndown das Sprints
+  
+<h3>1ª Sprint</h3>
 
-<h1 align="center"> <img src = "readme/grafico-burndown.PNG" height=500px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown.PNG" height=350px width=auto></h1> 
 
 <br>
 
