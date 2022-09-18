@@ -10,7 +10,7 @@
   <br>
   <a href ="#backlog-do-produto">Backlog do Produto </a> •
   <a href ="#backlog-das-sprints">Backlog das Sprints </a>  •
-  <a href ="#burndown-das-sprintss">Burndown das Sprints </a>  •
+  <a href ="#burndown-das-sprints">Burndown das Sprints </a>  •
   <a href ="#tecnologias">Tecnologias</a>  •
   <a href ="#produto">Produto</a>  •
   <a href ="#equipe">Equipe</a> 
@@ -84,7 +84,7 @@
 
 ## :chart_with_downwards_trend: Burndown das Sprints
 
-<h1 align="center"> <img src = "readme/grafico-burndown.png" height=1000px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown.PNG" height=500px width=auto></h1> 
 
 <br>
 
