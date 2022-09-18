@@ -104,9 +104,7 @@
 
 <h3>1ª Sprint - 29/08 a 18/09</h3>
 
-
-(vídeo)
-
+https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541-bde9-361190ca7f67.mp4
 
 <br>
   
