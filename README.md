@@ -6,13 +6,14 @@
   <a href ="#projeto">Projeto </a>  •
   <a href ="#proposta">Proposta </a>  • 
   <a href ="#prototipo">Protótipo </a>  • 
-  <a href ="#cronograma-das-sprints">Cronograma das Sprints </a>
+  <a href ="#cronograma-das-sprints">Cronograma das Sprints </a> •
+  <a href ="#backlog-do-produto">Backlog do Produto </a>
   <br>
-  <a href ="#backlog-do-produto">Backlog do Produto </a> •
   <a href ="#backlog-das-sprints">Backlog das Sprints </a>  •
   <a href ="#burndown-das-sprints">Burndown das Sprints </a>  •
   <a href ="#tecnologias">Tecnologias</a>  •
   <a href ="#produto">Produto</a>  •
+  <a href ="#modelo-de-dados-relacional">Modelo de Dados Relacional</a>  •
   <a href ="#equipe">Equipe</a> 
 </p>
 
@@ -105,6 +106,22 @@
 <h3>1ª Sprint - 29/08 a 18/09</h3>
 
 https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541-bde9-361190ca7f67.mp4
+
+<br>"
+  
+<span id="modelo-de-dados-relacional">
+
+## :package: Modelo de Dados Relacional
+
+<h3>Modelo Conceitual</h3>
+    
+<h1 align="center"> <img src = "readme/tecnologias.png" height=auto width=800px></h1>
+
+<br>
+
+<h3>Modelo Lógico</h3>
+
+<h1 align="center"> <img src = "readme/tecnologias.png" height=auto width=800px></h1>
 
 <br>
   
