@@ -111,7 +111,7 @@ https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541
   
 <span id="modelo-de-dados-relacional">
 
-## :package: Modelo de Dados Relacional
+## :open_file_folder: Modelo de Dados Relacional
 
 <h3>Modelo Conceitual</h3>
     
