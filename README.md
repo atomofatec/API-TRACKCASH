@@ -84,7 +84,7 @@
 
 ## :chart_with_downwards_trend: Burndown das Sprints
 
-<h1 align="center"> <img src = "readme/grafico-burndown.jpeg" height=1000px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown.png" height=1000px width=auto></h1> 
 
 <br>
 
