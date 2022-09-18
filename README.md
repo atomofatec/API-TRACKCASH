@@ -10,6 +10,7 @@
   <br>
   <a href ="#backlog-do-produto">Backlog do Produto </a> •
   <a href ="#backlog-das-sprints">Backlog das Sprints </a>  •
+  <a href ="#burndown-das-sprintss">Burndown das Sprints </a>  •
   <a href ="#tecnologias">Tecnologias</a>  •
   <a href ="#produto">Produto</a>  •
   <a href ="#equipe">Equipe</a> 
@@ -79,6 +80,14 @@
 
 <br>
 
+<span id="burndown-das-sprints">
+
+## :chart_with_downwards_trend: Burndown das Sprints
+
+<h1 align="center"> <img src = "readme/grafico-burndown.jpeg" height=1000px width=auto></h1> 
+
+<br>
+
 <span id="tecnologias">
   
 ## :gear: Tecnologias 
@@ -113,4 +122,4 @@
 |**Ivan Germano**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/Ivan-Duarte)|
 |**João Gabriel**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/JoaoGRMira)|
 |**Rebeca Gama**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/RebecaGama)|
-|**Thiago Bueno**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/NicholasGui29)|
+|**Thiago Bueno**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/TjBueno)|
