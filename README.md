@@ -107,7 +107,7 @@
 
 https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541-bde9-361190ca7f67.mp4
 
-<br>"
+<br>
   
 <span id="modelo-de-dados-relacional">
 
