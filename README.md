@@ -115,13 +115,13 @@ https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541
 
 <h3>Modelo Conceitual</h3>
     
-<h1 align="center"> <img src = "readme/tecnologias.png" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/DER - API2 - TrackCash.PNG" height=auto width=800px></h1>
 
 <br>
 
 <h3>Modelo Lógico</h3>
 
-<h1 align="center"> <img src = "readme/tecnologias.png" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/DER - API2 - TrackCash.PNG" height=auto width=800px></h1>
 
 <br>
   
