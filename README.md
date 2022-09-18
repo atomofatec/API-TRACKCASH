@@ -3,11 +3,12 @@
 <h1 align="center">API 2º Semestre 2022 - Equipe Átomo</h1>
 
 <p align="center">
-  <a href ="#o-projeto">Projeto </a>  •
+  <a href ="#projeto">Projeto </a>  •
   <a href ="#proposta">Proposta </a>  • 
+  <a href ="#prototipo">Protótipo </a>  • 
   <a href ="#cronograma-das-sprints">Cronograma das Sprints </a>  • 
-  <a href ="#product-backlog">Product Backlog </a> •
-  <a href ="#sprints-backlog">Sprints Backlog </a>  •
+  <a href ="#backlog-do-produto">Backlog do Produto </a> •
+  <a href ="#backlog-das-sprints">Backlog das Sprints </a>  •
   <a href ="#tecnologias">Tecnologias</a>  •
   <a href ="#produto">Produto</a>  •
   <a href ="#equipe">Equipe</a> 
@@ -15,15 +16,18 @@
 
 <br>
 
-## O Projeto
-<br>
+<span id="projeto">
+  
+## :clipboard: O Projeto
 
->**Status do Projeto: Em andamento**<br><br>
+> **Status do Projeto: Em andamento**
 - Nossos clientes são vendedores de lojas online e físiscas e para que possamos realizar nosso processo de conciliação financeira precisamos das informações destas vendas, para isso, estes clientes precisam realizar uma serie de configurações - nos dando autorização, para que nossos sistemas possam acessar: apis e planilhas de forma automatizada. Estas autorizações acontecem pela recepção de tokens e usuários de acesso. Portanto este sistema será responsável por salvar estas informações de usuário/senha e tokens.
 
 <br>
 
-## Proposta
+<span id="proposta">
+  
+## :dart: Proposta
 
 > **Requisitos Funcionais**
 
@@ -41,69 +45,71 @@
 
 <br>
 
+<span id="prototipo">
+  
+## :bulb: Protótipo
+
 **:link: Clique no link abaixo para visualizar o modelo do projeto.**  
-> [Protótipo](https://www.figma.com/file/CVTjd7Q6JZlAeHtRpOkRzp/PrototipoTrackCash?node-id=0%3A1)
+> [Protótipo do Projeto](https://www.figma.com/file/CVTjd7Q6JZlAeHtRpOkRzp/PrototipoTrackCash?node-id=0%3A1)
 
 <br>
 
-## Cronograma das Sprints
+<span id="cronograma-das-sprints">
 
-<h1 align="center"> <img src = "" height=auto width=800px></h1>
+## :calendar: Cronograma das Sprints
+
+<h1 align="center"> <img src = "readme/cronograma-das-sprints.jpeg" height=auto width=800px></h1>
 
 <br>
 
-## Product Backlog
+<span id="backlog-do-produto">
+
+## :pencil: Backlog do Produto
+
+<h1 align="center"> <img src = "readme/backlog-do-produto.jpeg" height=auto width=800px></h1> 
+
+<br>
+
+<span id="backlog-das-sprints">
+
+## :hourglass_flowing_sand: Backlog das Sprints
+
+<h1 align="center"> <img src = "readme/backlog-das-sprints.jpeg" height=1000px width=auto></h1> 
+
+<br>
+
+<span id="tecnologias">
+  
+## :gear: Tecnologias 
 
 <h1 align="center"> <img src = "" height=800px width=auto></h1> 
 
 <br>
 
-## Sprints Backlog 
+<span id="produto">
 
-<h1 align="center"> <img src = "" height=800px width=auto></h1> 
-
-<br>
-
-## Tecnologias 
-
-<h1 align="center"> <img src = "" height=800px width=auto></h1> 
-
-<br>
-
-## Produto
+## :package: Produto
 
 <h3>1ª Sprint - 29/08 a 18/09</h3>
 
 
-<br>
-
-<h3>2ª Sprint - 19/09 a 09/10</h3>
+(vídeo)
 
 
 <br>
+  
+<span id="equipe">
 
-<h3>3ª Sprint - 13/10 a 06/11</h3>
-
-
-<br>
-
-<h3>4ª Sprint - 07/11 a 27/11</h3>
-
-
-<br>
-
-## Equipe 
+## :man::computer::woman: Equipe
 
 <br>
 
 |Nome|Função|GitHub|
 | -------- |-------- |-------- |
-|**Víctor Henrique**|Scrum Master|[@GitHub](https://github.com/ViktorHenrique)|
-|**Nicholas Guilherme**|Product Owner|[@GitHub](https://github.com/NicholasGui29)|
-|**Elisa Carvalho**|Desenvolvedor|[@GitHub](https://github.com/elisadsc)|
-|**Ivan Germano**|Desenvolvedor|[@GitHub](https://github.com/Ivan-Duarte)|
-|**João Gabriel**|Desenvolvedor|[@GitHub](https://github.com/JoaoGRMira)|
-|**Rebeca Gama**|Desenvolvedor|[@GitHub](https://github.com/RebecaGama)|
-|**Thiago Bueno**|Desenvolvedor|[@GitHub]()|
-
-<br>
+|**Víctor Henrique**|Scrum Master|[![](https://bit.ly/3f9Xo0P)](https://github.com/ViktorHenrique)|
+|**Nicholas Guilherme**|Product Owner| [![](https://bit.ly/3f9Xo0P)](https://github.com/NicholasGui29)|
+|**Elisa Carvalho**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/elisadsc)|
+|**Ivan Germano**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/Ivan-Duarte)|
+|**João Gabriel**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/JoaoGRMira)|
+|**Rebeca Gama**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/RebecaGama)|
+|**Thiago Bueno**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/NicholasGui29)|
