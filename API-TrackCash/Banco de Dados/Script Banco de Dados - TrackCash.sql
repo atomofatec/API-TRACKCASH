@@ -11,8 +11,8 @@ create table canais(
 id_canais int primary key auto_increment,
 nome_canal varchar(30),
 tipo_canal varchar(30),
-padrao_autentificacao varchar(30),
-token int,
+padrao_autenticacao varchar(30),
+token varchar(30),
 senha_canal varchar(20));
 
 create table usuario(
@@ -20,3 +20,4 @@ cpf_usuario int primary key,
 nome_usuario varchar (30),
 senha_usuario varchar (20));
 
+select * from canais
