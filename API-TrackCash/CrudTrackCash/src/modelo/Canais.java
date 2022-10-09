@@ -9,11 +9,20 @@ package modelo;
  * @author PICHAU
  */
 public class Canais {
+
+    public Canais() {
+        this.idcanal = idcanal;
+        this.token = token;
+        this.tipocanal = tipocanal;
+        this.nomecanal = nomecanal;
+        this.padraoautenticacao = padraoautenticacao;
+        this.senhacanal = senhacanal;
+    }
     private int idcanal;
-    private int token;
+    private String token;
     private String tipocanal;
     private String nomecanal;
-    private String padraoautentificacao;
+    private String padraoautenticacao;
     private String senhacanal;
     
     public int getIdcanal(){
@@ -22,10 +31,10 @@ public class Canais {
     public void setIdcanal(int idcanal){
         this.idcanal = idcanal;
     }
-    public int getToken(){
+    public String getToken(){
         return token;
     }
-    public void setToken(int token){
+    public void setToken(String token){
         this.token = token;
     }
     public String getTipocanal(){
@@ -40,11 +49,11 @@ public class Canais {
     public void setNomecanal(String nomecanal){
         this.nomecanal = nomecanal;
     }
-    public String getPadraoautentificacao(){
-        return padraoautentificacao;
+    public String getPadraoautenticacao(){
+        return padraoautenticacao;
     }
-    public void setPadraoautentificacao(String padraoautentificacao){
-        this.padraoautentificacao = padraoautentificacao;
+    public void setPadraoautenticacao(String padraoautenticacao){
+        this.padraoautenticacao = padraoautenticacao;
     }
     public String getSenhacanal(){
         return senhacanal;
