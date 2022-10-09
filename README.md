@@ -108,6 +108,12 @@
 https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541-bde9-361190ca7f67.mp4
 
 <br>
+
+<h3>2ª Sprint - 19/09 a 09/10</h3>
+
+https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541-bde9-361190ca7f67.mp4
+
+<br>
   
 <span id="modelo-de-dados-relacional">
 
