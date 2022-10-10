@@ -117,9 +117,7 @@ https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541
 
 <h3>2ª Sprint - 19/09 a 09/10</h3>
 
-
-https://user-images.githubusercontent.com/100942191/194768219-d86d2564-065c-437c-a423-316bb8cc4497.mp4
-
+https://user-images.githubusercontent.com/100942191/194786107-55f791e1-a1fd-4db5-bcc8-766697d5571b.mp4
 
 <br>
   
