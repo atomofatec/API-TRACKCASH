@@ -127,13 +127,13 @@ https://user-images.githubusercontent.com/100942191/194786107-55f791e1-a1fd-4db5
 
 <h3>Modelo Conceitual</h3>
     
-<h1 align="center"> <img src = "readme/DER - Modelo Lógico.png" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/DER - Modelo Relacional.png" height=auto width=800px></h1>
 
 <br>
 
 <h3>Modelo Lógico</h3>
 
-<h1 align="center"> <img src = "readme/DER - Modelo Relacional.png" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/DER - Modelo Lógico.png" height=auto width=800px></h1>
 
 <br>
   
