@@ -61,7 +61,7 @@
 
 ## :calendar: Cronograma das Sprints
 
-<h1 align="center"> <img src = "readme/cronograma-das-sprints.jpeg" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/cronograma-das-sprints.png" height=auto width=800px></h1>
 
 <br>
 
@@ -69,7 +69,7 @@
 
 ## :pencil: Backlog do Produto
 
-<h1 align="center"> <img src = "readme/backlog-do-produto.jpeg" height=auto width=800px></h1> 
+<h1 align="center"> <img src = "readme/backlog-do-produto.png" height=auto width=800px></h1> 
 
 <br>
 
@@ -77,7 +77,7 @@
 
 ## :hourglass_flowing_sand: Backlog das Sprints
 
-<h1 align="center"> <img src = "readme/backlog-das-sprints.jpeg" height=1000px width=auto></h1> 
+<h1 align="center"> <img src = "readme/backlog-das-sprints.png" height=1000px width=auto></h1> 
 
 <br>
 
