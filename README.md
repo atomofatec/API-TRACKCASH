@@ -93,7 +93,11 @@
   
 <h3>2ª Sprint</h3>
 
-<h1 align="center"> <img src = "readme/grafico-burndown-sprint2.jpeg" height=350px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint2.jpeg" height=350px width=auto></h1>
+ 
+<h3>3ª Sprint</h3>
+
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint3.jpeg" height=350px width=auto></h1> 
 
 <br>
 
@@ -118,6 +122,12 @@ https://user-images.githubusercontent.com/100942191/190927318-888d711f-c1ab-4541
 <h3>2ª Sprint - 19/09 a 09/10</h3>
 
 https://user-images.githubusercontent.com/100942191/194786107-55f791e1-a1fd-4db5-bcc8-766697d5571b.mp4
+  
+<br>
+
+<h3>3ª Sprint - 17/10 a 06/11</h3>
+
+
 
 <br>
   
