@@ -99,7 +99,7 @@
  
 <h3>3ª Sprint</h3>
 
-<h1 align="center"> <img src = "readme/grafico-burndown-sprint3.JPG" height=350px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint.JPG" height=350px width=auto></h1> 
 
 <br>
 
