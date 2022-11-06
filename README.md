@@ -129,7 +129,7 @@ https://user-images.githubusercontent.com/100942191/194786107-55f791e1-a1fd-4db5
 
 <h3>3ª Sprint - 17/10 a 06/11</h3>
 
-
+https://user-images.githubusercontent.com/100942191/200201275-042ad5bf-a1cf-44be-85fc-716714c5e37b.mp4
 
 <br>
   
