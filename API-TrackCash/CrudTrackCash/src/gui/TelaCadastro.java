@@ -4,14 +4,22 @@
  */
 package gui;
 
+import dao.CanalUserDAO;
 import dao.UsuarioDAO;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
+import modelo.Canais;
+import modelo.CanalUser;
+import modelo.Secao;
 
 /**
  *
@@ -22,22 +30,26 @@ public class TelaCadastro extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastro
      */
+    Usuario usuarioLogado = new Usuario();
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+
     public TelaCadastro() {
         initComponents();
     }
-    
+
     class jPanelGradient extends JPanel {
+
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
             int height = getHeight();
-            
+
             Color color1 = new Color(48, 18, 78);
             Color color2 = new Color(200, 88, 51);
             GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, width, height);
-            
+
         }
     }
 
@@ -305,20 +317,19 @@ public class TelaCadastro extends javax.swing.JFrame {
         Usuario usuario = new Usuario();
         UsuarioDAO daousu = new UsuarioDAO();
 
-        if(txtNome.getText().isEmpty()||txtEmail.getText().isEmpty()||txtSenha.getText().isEmpty()||txtCofirmSenha.getText().isEmpty()){
+        if (txtNome.getText().isEmpty() || txtEmail.getText().isEmpty() || txtSenha.getText().isEmpty() || txtCofirmSenha.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "ATENÇÃO - Preencha todos os campos !");
-        }else{
+        } else {
             usuario.setNome_usuario(txtNome.getText());
             usuario.setEmail_usuario(txtEmail.getText());
 
-            if(txtSenha.getText().equals(txtCofirmSenha.getText())){
+            if (txtSenha.getText().equals(txtCofirmSenha.getText())) {
                 usuario.setSenha_usuario(txtSenha.getText());
                 daousu.adicionaUsuario(usuario);
-                JOptionPane.showMessageDialog(null, "Usuario "+txtNome.getText()+" Cadastrado com sucesso !");
+                JOptionPane.showMessageDialog(null, "Usuario " + txtNome.getText() + " Cadastrado com sucesso !");
                 new TelaLogin().setVisible(true);
                 this.dispose();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(null, "As senhas não estão iguais !");
             }
         }
@@ -368,6 +379,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnCadastrar;

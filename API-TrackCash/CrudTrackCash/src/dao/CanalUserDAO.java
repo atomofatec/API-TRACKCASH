@@ -4,7 +4,7 @@
  */
 package dao;
 
-import conexãobanco.ConexaoComBanco;
+import conexaobanco.ConexaoComBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +31,7 @@ public class CanalUserDAO {
     }
 
     public void adicionaCanalUser(CanalUser user) {
-        String sql = "INSERT INTO canal_usuario(nome_canal, token, usuario, senha) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO canal_usuario(nome_canal, token, usuario, senha, id_usuario) VALUES(?, ?, ?, ?, ?)";
         con = new ConexaoComBanco().getConnection();
         try {
             ps = con.prepareStatement(sql);
@@ -39,6 +39,8 @@ public class CanalUserDAO {
             ps.setString(2, user.getToken());
             ps.setString(3, user.getUsuario());
             ps.setString(4, user.getSenha());
+            ps.setInt(5, user.getIdusuario());
+            
             ps.execute();
             ps.close();
 
@@ -52,11 +54,10 @@ public class CanalUserDAO {
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Token", "Usuário", "Senha",}, 0);
         try {
             String query = ("SELECT * FROM canal_usuario LIMIT " + start + "," + size);
-            System.out.println(query);
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
-                int idusuario = rs.getInt("id_usuario");
+                int idusuario = rs.getInt("id_canal_usuario");
                 String nome = rs.getString("nome_canal");
                 String token = rs.getString("token");
                 String usuario = rs.getString("usuario");

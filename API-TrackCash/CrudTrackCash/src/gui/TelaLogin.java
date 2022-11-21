@@ -4,41 +4,51 @@
  */
 package gui;
 
+import conexaobanco.ConexaoComBanco;
 import dao.UsuarioDAO;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import modelo.Secao;
+import modelo.Usuario;
+import gui.TelaConfiguracoesAtivasUser;
 
 /**
  *
  * @author fatec
  */
 public class TelaLogin extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form TelaLogin
      */
     public TelaLogin() {
         initComponents();
+        
     }
-    
+    Connection con = null;
     
     //Gradiente do JPanel de fundo
     class jPanelGradient extends JPanel {
+
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
             int height = getHeight();
-            
+
             Color color1 = new Color(48, 18, 78);
             Color color2 = new Color(200, 88, 51);
             GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, width, height);
-            
+
         }
     }
 
@@ -56,13 +66,14 @@ public class TelaLogin extends javax.swing.JFrame {
         txtEmailLogin = new javax.swing.JTextField();
         lbEmailLogin = new javax.swing.JLabel();
         lbSenhaLogin = new javax.swing.JLabel();
-        pftxtSenha = new javax.swing.JPasswordField();
+        txtSenha = new javax.swing.JPasswordField();
         lbTextoLogin = new javax.swing.JLabel();
         painelBtnAcessar = new javax.swing.JPanel();
         lbBtnAcessar = new javax.swing.JLabel();
         lbBtnCadastrar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        cbTipoUser = new javax.swing.JComboBox<>();
         lbLogo = new javax.swing.JLabel();
         lbTxtPrincipal = new javax.swing.JLabel();
         lbTxtInfo = new javax.swing.JLabel();
@@ -129,6 +140,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeSenha.png"))); // NOI18N
 
+        cbTipoUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Admin", "User" }));
+
         javax.swing.GroupLayout painelLoginLayout = new javax.swing.GroupLayout(painelLogin);
         painelLogin.setLayout(painelLoginLayout);
         painelLoginLayout.setHorizontalGroup(
@@ -144,24 +157,21 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
                 .addContainerGap(64, Short.MAX_VALUE)
-                .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                        .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(lbTextoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pftxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(painelBtnAcessar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(92, 92, 92))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                        .addComponent(lbBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(147, 147, 147))))
+                .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lbTextoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(painelBtnAcessar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(92, 92, 92))
         );
 
-        painelLoginLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {painelBtnAcessar, pftxtSenha, txtEmailLogin});
+        painelLoginLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {painelBtnAcessar, txtEmailLogin, txtSenha});
 
         painelLoginLayout.setVerticalGroup(
             painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,15 +189,17 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pftxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(cbTipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(painelBtnAcessar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbBtnCadastrar)
-                .addGap(63, 63, 63))
+                .addGap(30, 30, 30))
         );
 
-        painelLoginLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {painelBtnAcessar, pftxtSenha, txtEmailLogin});
+        painelLoginLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {painelBtnAcessar, txtEmailLogin, txtSenha});
 
         lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoTrackCashB.png"))); // NOI18N
@@ -254,28 +266,73 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void lbBtnAcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnAcessarMouseClicked
         // Fazer o login
-        UsuarioDAO daoUsu = new UsuarioDAO();
+        Usuario objUsu = new Usuario();
+        Secao secaoUsu = new Secao();
 
-        // Quando vazio, retorna erro
-        while (txtEmailLogin.getText().equals("") || pftxtSenha.getText().equals(""))
-        {
+        String indexComboBox = (String) cbTipoUser.getSelectedItem();
+        while (txtEmailLogin.getText().equals("") || txtSenha.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             break;
-        } 
-        
-        // Verifica se e-mail e senha estão corretos
-        if (daoUsu.checkLogin(txtEmailLogin.getText(), pftxtSenha.getText())){
-            new TelaConfiguracoesAtivasUser().setVisible(true);
-            this.dispose();
         }
-        // Verifica se o login é de um administrador
-        else if ((txtEmailLogin.getText().equals("admin") & pftxtSenha.getText().equals("admin"))){
-            new TelaConfiguracoesAtivas().setVisible(true);
+        while (indexComboBox.equals("Selecione")) {
+            JOptionPane.showMessageDialog(null, "Selecione um tipo de Usuario");
+            break;
         }
+
+        objUsu.setEmail_usuario(txtEmailLogin.getText());
+        objUsu.setSenha_usuario(txtSenha.getText());
+        objUsu.setTipo_usuario((String) cbTipoUser.getSelectedItem());
         
-        // Retorna erro
-        else{
-            JOptionPane.showMessageDialog(null, "Login Incorreto ou Usuario não Existe");
+        secaoUsu.setEmail_user(txtEmailLogin.getText());
+        secaoUsu.setTipo_user((String) cbTipoUser.getSelectedItem());
+
+        UsuarioDAO objUsuDAO = new UsuarioDAO();
+
+        ResultSet rsUsuDAO = objUsuDAO.autenticacaoUsuario(objUsu);
+        try {
+            if (rsUsuDAO.next()) {
+                int idUsuario = rsUsuDAO.getInt("id_usuario");
+                String dadoCbTipo = secaoUsu.getTipo_user();
+                if (dadoCbTipo == "Admin") {
+                    String sql = "INSERT INTO secao(email_user, tipo_user, id_user) VALUES(?, ?, 1)";
+                    con = new ConexaoComBanco().getConnection();
+                    try {
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setString(1, secaoUsu.getEmail_user());
+                        stmt.setString(2, secaoUsu.getTipo_user());
+                        stmt.execute();
+                    } catch (SQLException u) {
+                        System.out.print("Erro no ADM " + u);
+                    }
+                    TelaConfiguracoesAtivas telaAdm = new TelaConfiguracoesAtivas();
+                    telaAdm.setVisible(true);
+                    this.dispose();
+                } else if (dadoCbTipo == "User") {
+                    String sql = "INSERT INTO secao(email_user, tipo_user, id_user) VALUES(?, ?, 1)";
+                    con = new ConexaoComBanco().getConnection();
+                    try {
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setString(1, secaoUsu.getEmail_user());
+                        stmt.setString(2, secaoUsu.getTipo_user());
+                        stmt.execute();
+                    } catch (SQLException u) {
+                        System.out.print("Erro no USER " + u);
+                    }
+                    TelaConfiguracoesAtivasUser telaUser = new TelaConfiguracoesAtivasUser(idUsuario);
+                    objUsu.setEmail_usuario(txtEmailLogin.getText());
+                    telaUser.ObterUsuario(idUsuario);
+                    telaUser.setVisible(true);
+                    
+                    
+                    this.dispose();
+                    
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Email ou Senha Incorretos");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro no Login" + ex);
         }
     }//GEN-LAST:event_lbBtnAcessarMouseClicked
 
@@ -314,14 +371,13 @@ public class TelaLogin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaLogin().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaLogin().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbTipoUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbBtnAcessar;
@@ -335,7 +391,10 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JPanel painelBtnAcessar;
     private javax.swing.JPanel painelFundo;
     private javax.swing.JPanel painelLogin;
-    private javax.swing.JPasswordField pftxtSenha;
     private javax.swing.JTextField txtEmailLogin;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
+
+     
 }
+

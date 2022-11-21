@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dao;
-import conexãobanco.ConexaoComBanco;
+import conexaobanco.ConexaoComBanco;
 import modelo.Canais;
 import java.sql.*;
 // Providencia ao NetBeans o acesso e o processamento de dados em um banco de dados.
@@ -36,7 +36,7 @@ public class CanaisDAO {
         }
     }
     public boolean update(Canais canais){
-        String sql = "UPDATE canais SET nome_canal = ?,tipo_canal = ?,padrao_autenticacao = ?,token = ?,usuario_canal = ?,senha_canal = ? WHERE id_canais = ?";
+        String sql = "UPDATE canais SET nome_canal = ?,tipo_canal = ?,padrao_autenticacao = ? WHERE id_canais = ?";
         
         PreparedStatement stmt = null;
         
@@ -45,10 +45,7 @@ public class CanaisDAO {
             stmt.setString(1, canais.getNomecanal());
             stmt.setString(2, canais.getTipocanal());
             stmt.setString(3, canais.getPadraoautenticacao());
-            stmt.setString(4, canais.getToken());
-            stmt.setString(5, canais.getUsuariocanal());
-            stmt.setString(6, canais.getSenhacanal());
-            stmt.setInt(7, canais.getIdcanal());
+            stmt.setInt(4, canais.getIdcanal());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -57,7 +54,7 @@ public class CanaisDAO {
         }
     }
     public boolean saveusu(Canais canais){
-        String sql = "INSERT INTO Canais(nome_canal,tipo_canal,padrao_autenticacao,token,senha_canal) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Canais(nome_canal,tipo_canal,padrao_autenticacao) VALUES (?,?,?)";
         
         PreparedStatement stmt = null;
         
@@ -66,8 +63,6 @@ public class CanaisDAO {
             stmt.setString(1, canais.getNomecanal());
             stmt.setString(2, canais.getTipocanal());
             stmt.setString(3, canais.getPadraoautenticacao());
-            stmt.setString(4, canais.getToken());
-            stmt.setString(5, canais.getSenhacanal());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -77,7 +72,7 @@ public class CanaisDAO {
     }
     public DefaultTableModel fetchBySize(int start, int size) {
         
-        DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Canais", "Tipo", "Padrão Autenticaçao", "Token", "Senha"}, 0);
+        DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Canais", "Tipo", "Padrão Autenticaçao"}, 0);
         try {
             String query = ("SELECT * FROM canais LIMIT " + start + "," + size);
             System.out.println(query);
@@ -88,10 +83,8 @@ public class CanaisDAO {
                 String nome = rs.getString("nome_canal");
                 String tipo = rs.getString("tipo_canal");
                 String padraoautenticacao = rs.getString("padrao_autenticacao");
-                String token = rs.getString("token");
-                String senha = rs.getString("senha_canal");
 
-                model.addRow(new Object[]{idcanais, nome, tipo, padraoautenticacao, token, senha});
+                model.addRow(new Object[]{idcanais, nome, tipo, padraoautenticacao});
             }
         } catch (Exception e) {
             e.printStackTrace();

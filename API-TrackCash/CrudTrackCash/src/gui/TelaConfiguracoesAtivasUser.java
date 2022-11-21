@@ -4,7 +4,7 @@
  */
 package gui;
 
-import conexãobanco.ConexaoComBanco;
+import conexaobanco.ConexaoComBanco;
 import dao.CanaisDAO;
 import dao.CanalUserDAO;
 import dao.UsuarioDAO;
@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import modelo.Canais;
 import modelo.CanalUser;
+import modelo.Secao;
 import modelo.Usuario;
 
 /**
@@ -31,31 +32,53 @@ import modelo.Usuario;
  * @author Rebeca
  */
 public class TelaConfiguracoesAtivasUser extends JFrame {
-
     /**
      * Creates new form TelaConfiguraçõesAtivas
      */
     CanalUserDAO dao = new CanalUserDAO();
     DefaultTableModel dm = (DefaultTableModel) dao.User(0, 10);
-
-    int indexAbas = 1;
-    int indicePaginaCanais = 0;
-
+    Connection con = null;
+    Secao secaoUsu = new Secao();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    int indicePaginaCanaisUsu = 0;
+    Usuario usuarioLogado = new Usuario();
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    
     int paginaInicial = (int) dao.getRowCount();
-
-    public TelaConfiguracoesAtivasUser() {
+    
+    public TelaConfiguracoesAtivasUser(int idUsuario) {
+        
         initComponents();
+        ObterUsuario(idUsuario);
         atualizarTabelaUser();
+        
+        String sql = "SELECT email_user FROM secao where id_user = 1";
+        con = new ConexaoComBanco().getConnection();
+
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                secaoUsu.setEmail_user(rs.getString("email_user"));
+            }
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+        
+        lbEmailPefilUsu.setText((String)secaoUsu.getEmail_user());
+        
+        
         restaurarDadosComboBoxCanais();
 
         //PAGINAÇÃO TABELA CANAIS
-        tbDadosUser.setModel(dm);
-        lbBtnPrev.setEnabled(false);
-        lbBtnInicio.setEnabled(false);
+        /*tbDadosUser.setModel(dm);
+        btnPrevUsu.setEnabled(false);
+        btnStartUsu.setEnabled(false);*/
 
         if (paginaInicial <= 10) {
-            lbBtnNext.setEnabled(false);
-            lbBtnFim.setEnabled(false);
+            btnNextUsu.setEnabled(false);
+            btnEndUsu.setEnabled(false);
         }
 
         lbUsuario.setVisible(false);
@@ -65,6 +88,16 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         lbToken.setVisible(false);
         txtToken.setVisible(false);
 
+    }
+    
+    public boolean ObterUsuario(int idUsuario) {
+        Usuario usuario = usuarioDAO.obterUsuarioPorId(idUsuario);
+        if (usuario != null) {
+            this.usuarioLogado = usuario;
+        return true;
+        }else{
+            return false;
+        }
     }
 
     class jPanelGradient extends JPanel {
@@ -96,21 +129,18 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         campoBuscaUser = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDadosUser = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        btnAtualizarTabela = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        lbBtnFim = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        lbBtnNext = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        lbBtnPrev = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        lbBtnInicio = new javax.swing.JLabel();
         lbPesqui = new javax.swing.JLabel();
+        painelNaveg2 = new javax.swing.JPanel();
+        btnAtualizarTabelaUsu = new javax.swing.JButton();
+        btnStartUsu = new javax.swing.JButton();
+        btnNextUsu = new javax.swing.JButton();
+        btnPrevUsu = new javax.swing.JButton();
+        btnEndUsu = new javax.swing.JButton();
         lbTexto = new javax.swing.JLabel();
         painelMenu = new jPanelGradient();
         lbLogo = new javax.swing.JLabel();
         lbPerfil = new javax.swing.JLabel();
+        lbEmailPefilUsu = new javax.swing.JLabel();
         PainelConfigAdm = new javax.swing.JPanel();
         lbNomeCanal = new javax.swing.JLabel();
         txtNomeCanalUser = new javax.swing.JTextField();
@@ -184,158 +214,107 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
 
         PainelTabelaAdm.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 860, 233));
 
-        jPanel4.setBackground(new java.awt.Color(232, 232, 232));
+        lbPesqui.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
+        PainelTabelaAdm.add(lbPesqui, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 10, 30, 30));
 
-        btnAtualizarTabela.setBackground(new java.awt.Color(232, 232, 232));
-        btnAtualizarTabela.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnAtualizarTabela.setForeground(new java.awt.Color(255, 255, 255));
-        btnAtualizarTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/atualizar.png"))); // NOI18N
-        btnAtualizarTabela.setBorder(null);
-        btnAtualizarTabela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAtualizarTabela.addActionListener(new java.awt.event.ActionListener() {
+        painelNaveg2.setBackground(new java.awt.Color(232, 232, 232));
+
+        btnAtualizarTabelaUsu.setBackground(new java.awt.Color(232, 232, 232));
+        btnAtualizarTabelaUsu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAtualizarTabelaUsu.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtualizarTabelaUsu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/atualizar.png"))); // NOI18N
+        btnAtualizarTabelaUsu.setBorder(null);
+        btnAtualizarTabelaUsu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAtualizarTabelaUsu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarTabelaActionPerformed(evt);
+                btnAtualizarTabelaUsuActionPerformed(evt);
             }
         });
 
-        jPanel8.setBackground(new java.awt.Color(200, 88, 51));
+        btnStartUsu.setBackground(new java.awt.Color(217, 90, 48));
+        btnStartUsu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnStartUsu.setForeground(new java.awt.Color(255, 255, 255));
+        btnStartUsu.setText("Inicio");
+        btnStartUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartUsuActionPerformed(evt);
+            }
+        });
 
-        lbBtnFim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnFim.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnFim.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnFim.setText("Fim");
-        lbBtnFim.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnFim.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNextUsu.setBackground(new java.awt.Color(217, 90, 48));
+        btnNextUsu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNextUsu.setForeground(new java.awt.Color(255, 255, 255));
+        btnNextUsu.setText(">>");
+        btnNextUsu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnFimMouseClicked(evt);
+                btnNextUsuMouseClicked(evt);
+            }
+        });
+        btnNextUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextUsuActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbBtnFim, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbBtnFim, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-        );
-
-        jPanel9.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnNext.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnNext.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnNext.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnNext.setText(">>");
-        lbBtnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPrevUsu.setBackground(new java.awt.Color(217, 90, 48));
+        btnPrevUsu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPrevUsu.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrevUsu.setText("<<");
+        btnPrevUsu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnNextMouseClicked(evt);
+                btnPrevUsuMouseClicked(evt);
+            }
+        });
+        btnPrevUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevUsuActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel10.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnPrev.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnPrev.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnPrev.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnPrev.setText("<<");
-        lbBtnPrev.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnPrev.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnPrevMouseClicked(evt);
+        btnEndUsu.setBackground(new java.awt.Color(217, 90, 48));
+        btnEndUsu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEndUsu.setForeground(new java.awt.Color(255, 255, 255));
+        btnEndUsu.setText("Fim");
+        btnEndUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEndUsuActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnInicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnInicio.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnInicio.setText("Início");
-        lbBtnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnInicioMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbBtnInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbBtnInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAtualizarTabela)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelNaveg2Layout = new javax.swing.GroupLayout(painelNaveg2);
+        painelNaveg2.setLayout(painelNaveg2Layout);
+        painelNaveg2Layout.setHorizontalGroup(
+            painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelNaveg2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtualizarTabela))
+                .addComponent(btnStartUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPrevUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnAtualizarTabelaUsu)
+                .addGap(12, 12, 12)
+                .addComponent(btnNextUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEndUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        painelNaveg2Layout.setVerticalGroup(
+            painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelNaveg2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNextUsu)
+                        .addComponent(btnEndUsu))
+                    .addGroup(painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAtualizarTabelaUsu)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnStartUsu)
+                            .addComponent(btnPrevUsu))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PainelTabelaAdm.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(264, 290, 330, -1));
-
-        lbPesqui.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
-        PainelTabelaAdm.add(lbPesqui, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 10, 30, 30));
+        PainelTabelaAdm.add(painelNaveg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 310, 40));
 
         jPanel1.add(PainelTabelaAdm, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 900, 340));
 
@@ -353,24 +332,31 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
             }
         });
 
+        lbEmailPefilUsu.setForeground(new java.awt.Color(255, 255, 255));
+        lbEmailPefilUsu.setText("Teste");
+
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
         painelMenuLayout.setHorizontalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addComponent(lbLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 692, Short.MAX_VALUE)
-                .addComponent(lbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 617, Short.MAX_VALUE)
+                .addComponent(lbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbEmailPefilUsu)
+                .addGap(66, 66, 66))
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(painelMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbEmailPefilUsu)
+                            .addComponent(lbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -538,11 +524,6 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_pesqActionPerformed
 
-    private void btnAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaActionPerformed
-        // Botão atualizar tabela:
-        atualizarTabelaUser();
-    }//GEN-LAST:event_btnAtualizarTabelaActionPerformed
-
     private void cbNomeCanalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNomeCanalActionPerformed
 
     }//GEN-LAST:event_cbNomeCanalActionPerformed
@@ -658,7 +639,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
     }//GEN-LAST:event_lbBtnExcluirMouseClicked
 
     private void lbBtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnEditarMouseClicked
-                //Botão de Atualizar dados dados da Tabela
+                
 
         if (tbDadosUser.getSelectedRow() != -1) {
 
@@ -698,27 +679,97 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         user.setToken(token);
         user.setUsuario(usuario);
         user.setSenha(senha);
-
+        user.setIdusuario(usuarioLogado.getId_usuario());
+        
         CanalUserDAO userDAO = new CanalUserDAO();
         userDAO.adicionaCanalUser(user);
         atualizarTabelaUser();
     }//GEN-LAST:event_lbBtnAddMouseClicked
 
-    private void lbBtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnInicioMouseClicked
-    // TODO add your handling code here:
+    private void lbPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbPerfilMouseClicked
+        // TODO add your handling code here:
+        TelaConfiguracoesConta telaConfigConta = new TelaConfiguracoesConta();
+        telaConfigConta.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbPerfilMouseClicked
+
+    private void btnAtualizarTabelaUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaUsuActionPerformed
+        // TODO add your handling code here:
+        atualizarTabelaUser();
+    }//GEN-LAST:event_btnAtualizarTabelaUsuActionPerformed
+
+    private void btnStartUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartUsuActionPerformed
+        // TODO add your handling code here:
         CanaisDAO dao = new CanaisDAO();
         DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(0, 10);
         tbDadosUser.setModel(pagina);
-        lbBtnInicio.setEnabled(false);
-        lbBtnPrev.setEnabled(false);
-        lbBtnNext.setEnabled(true);
-        lbBtnFim.setEnabled(true);
-        indicePaginaCanais = 0;
-    }//GEN-LAST:event_lbBtnInicioMouseClicked
+        btnStartUsu.setEnabled(false);
+        btnPrevUsu.setEnabled(false);
+        btnNextUsu.setEnabled(true);
+        btnEndUsu.setEnabled(true);
+        indicePaginaCanaisUsu = 0;
+    }//GEN-LAST:event_btnStartUsuActionPerformed
 
-    private void lbBtnFimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnFimMouseClicked
+    private void btnNextUsuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextUsuMouseClicked
         // TODO add your handling code here:
+        indicePaginaCanaisUsu = indicePaginaCanaisUsu + 10;
+    }//GEN-LAST:event_btnNextUsuMouseClicked
 
+    private void btnNextUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextUsuActionPerformed
+        // TODO add your handling code here:
+        CanaisDAO dao = new CanaisDAO();
+
+        //(currentPage, totalPages);
+        int index = (int) dao.getRowCount();
+        int tamanho = indicePaginaCanaisUsu + 10;
+
+        int resultado = index - tamanho;
+
+        if (resultado < 10) {
+            btnNextUsu.setEnabled(false);
+            btnEndUsu.setEnabled(false);
+        }
+
+        if (tamanho == 0) {
+            btnPrevUsu.setEnabled(false);
+            btnStartUsu.setEnabled(false);
+        } else {
+            btnPrevUsu.setEnabled(true);
+            btnStartUsu.setEnabled(true);
+        }
+        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
+        tbDadosUser.setModel(pagina);
+    }//GEN-LAST:event_btnNextUsuActionPerformed
+
+    private void btnPrevUsuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevUsuMouseClicked
+        // TODO add your handling code here:
+        
+        indicePaginaCanaisUsu = indicePaginaCanaisUsu - 10;
+    }//GEN-LAST:event_btnPrevUsuMouseClicked
+
+    private void btnPrevUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevUsuActionPerformed
+        // TODO add your handling code here:
+        CanaisDAO dao = new CanaisDAO();
+        //(currentPage, totalPages);
+
+        int tamanho = indicePaginaCanaisUsu - 10;
+
+        btnNextUsu.setEnabled(true);
+        btnEndUsu.setEnabled(true);
+
+        if (tamanho == 0) {
+            btnPrevUsu.setEnabled(false);
+            btnStartUsu.setEnabled(false);
+        } else {
+            btnPrevUsu.setEnabled(true);
+            btnStartUsu.setEnabled(true);
+        }
+        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
+        tbDadosUser.setModel(pagina);
+    }//GEN-LAST:event_btnPrevUsuActionPerformed
+
+    private void btnEndUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndUsuActionPerformed
+        // TODO add your handling code here:
         CanaisDAO dao = new CanaisDAO();
         int index = (int) dao.getRowCount();
 
@@ -727,68 +778,12 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         System.out.println(valorfinal);
         DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(valortotal, 10);
         tbDadosUser.setModel(pagina);
-        lbBtnNext.setEnabled(false);
-        lbBtnFim.setEnabled(false);
-        lbBtnInicio.setEnabled(true);
-        lbBtnPrev.setEnabled(true);
-        indicePaginaCanais = valortotal;
-
-    }//GEN-LAST:event_lbBtnFimMouseClicked
-
-    private void lbBtnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnPrevMouseClicked
-        // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-        //(currentPage, totalPages);
-
-        int tamanho = indicePaginaCanais - 10;
-
-        lbBtnNext.setEnabled(true);
-        lbBtnFim.setEnabled(true);
-
-        if (tamanho == 0) {
-            lbBtnPrev.setEnabled(false);
-            lbBtnInicio.setEnabled(false);
-        } else {
-            lbBtnPrev.setEnabled(true);
-            lbBtnInicio.setEnabled(true);
-        }
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
-        tbDadosUser.setModel(pagina);
-
-    }//GEN-LAST:event_lbBtnPrevMouseClicked
-
-    private void lbBtnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnNextMouseClicked
-        // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-
-        //(currentPage, totalPages);
-        int index = (int) dao.getRowCount();
-        int tamanho = indicePaginaCanais + 10;
-
-        int resultado = index - tamanho;
-
-        if (resultado < 10) {
-            lbBtnNext.setEnabled(false);
-            lbBtnFim.setEnabled(false);
-        }
-
-        if (tamanho == 0) {
-            lbBtnPrev.setEnabled(false);
-            lbBtnInicio.setEnabled(false);
-        } else {
-            lbBtnPrev.setEnabled(true);
-            lbBtnInicio.setEnabled(true);
-        }
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
-        tbDadosUser.setModel(pagina);
-    }//GEN-LAST:event_lbBtnNextMouseClicked
-
-    private void lbPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbPerfilMouseClicked
-        // TODO add your handling code here:
-        TelaLogin login = new TelaLogin();
-        login.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_lbPerfilMouseClicked
+        btnNextUsu.setEnabled(false);
+        btnEndUsu.setEnabled(false);
+        btnStartUsu.setEnabled(true);
+        btnPrevUsu.setEnabled(true);
+        indicePaginaCanaisUsu = valortotal;
+    }//GEN-LAST:event_btnEndUsuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -823,7 +818,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaConfiguracoesAtivasUser().setVisible(true);
+                new TelaConfiguracoesAtivasUser(0).setVisible(true);
             }
         });
     }
@@ -832,27 +827,23 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelConfigAdm;
     private javax.swing.JPanel PainelTabelaAdm;
-    private javax.swing.JButton btnAtualizarTabela;
+    private javax.swing.JButton btnAtualizarTabelaUsu;
+    private javax.swing.JButton btnEndUsu;
+    private javax.swing.JButton btnNextUsu;
+    private javax.swing.JButton btnPrevUsu;
+    private javax.swing.JButton btnStartUsu;
     private javax.swing.JTextField campoBuscaUser;
     private javax.swing.JComboBox<String> cbNomeCanal;
     private javax.swing.JComboBox<String> cbPadraoAutenticacao;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbBtnAdd;
     private javax.swing.JLabel lbBtnEditar;
     private javax.swing.JLabel lbBtnExcluir;
-    private javax.swing.JLabel lbBtnFim;
-    private javax.swing.JLabel lbBtnInicio;
-    private javax.swing.JLabel lbBtnNext;
-    private javax.swing.JLabel lbBtnPrev;
+    private javax.swing.JLabel lbEmailPefilUsu;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbNomeCanal;
     private javax.swing.JLabel lbNomeCanal1;
@@ -864,6 +855,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
     private javax.swing.JLabel lbToken;
     private javax.swing.JLabel lbUsuario;
     private javax.swing.JPanel painelMenu;
+    private javax.swing.JPanel painelNaveg2;
     private javax.swing.JTable tbDadosUser;
     private javax.swing.JTextField txtNomeCanalUser;
     private javax.swing.JTextField txtSenha;
@@ -876,12 +868,14 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         try {
             ConexaoComBanco ccb = new ConexaoComBanco();
             Connection connection = ccb.getConnection();
-            String sql = "SELECT * FROM canal_usuario LIMIT 0,10";
+            String sql = "SELECT * FROM canal_usuario WHERE id_usuario = ? LIMIT 0,10";
             PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, usuarioLogado.getId_usuario());
             ResultSet rs = stmt.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tbDadosUser.getModel();
             modelo.setNumRows(0);
             while (rs.next()) {
+            int idxxx = rs.getInt("id_usuario");
                 modelo.addRow(new Object[]{rs.getInt("id_canal_usuario"),
                     rs.getString("nome_canal"),
                     rs.getString("token"),
@@ -891,20 +885,21 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
             }
             rs.close();
             connection.close();
-            indicePaginaCanais = 0;
-            lbBtnInicio.setEnabled(false);
-            lbBtnPrev.setEnabled(false);
+            indicePaginaCanaisUsu = 0;
+            btnStartUsu.setEnabled(false);
+            btnPrevUsu.setEnabled(false);
 
             if (paginaInicial <= 10) {
-                lbBtnNext.setEnabled(false);
-                lbBtnFim.setEnabled(false);
+                btnNextUsu.setEnabled(false);
+                btnEndUsu.setEnabled(false);
             } else {
-                lbBtnNext.setEnabled(true);
-                lbBtnFim.setEnabled(true);
+                btnNextUsu.setEnabled(true);
+                btnEndUsu.setEnabled(true);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }           
+
     }
     Vector<String> nome_canal = new Vector<String>();
 

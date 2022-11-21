@@ -14,15 +14,17 @@ public class Usuario {
     private String email_usuario;
     private String nome_usuario;
     private String senha_usuario;
-
+    private String tipo_usuario;
+    
     public Usuario() {
     }
 
-    public Usuario(int id_usuario, String email_usuario, String nome_usuario, String senha_usuario) {
+    public Usuario(int id_usuario, String email_usuario, String nome_usuario, String senha_usuario, String tipo_usuario) {
         this.id_usuario = id_usuario;
         this.email_usuario = email_usuario;
         this.nome_usuario = nome_usuario;
         this.senha_usuario = senha_usuario;
+        this.tipo_usuario = tipo_usuario;
     }
 
     public int getId_usuario() {
@@ -55,5 +57,13 @@ public class Usuario {
 
     public void setSenha_usuario(String senha_usuario) {
         this.senha_usuario = senha_usuario;
+    }
+    
+    public String getTipo_usuario() {
+        return tipo_usuario;
+    }
+
+    public void setTipo_usuario(String tipo_usuario) {
+        this.tipo_usuario = tipo_usuario;
     }
 }

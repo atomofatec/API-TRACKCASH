@@ -4,7 +4,7 @@
  */
 package gui;
 
-import conexãobanco.ConexaoComBanco;
+import conexaobanco.ConexaoComBanco;
 import dao.CanaisDAO;
 import dao.UsuarioDAO;
 import java.awt.Color;
@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import modelo.Canais;
+import modelo.Secao;
 import modelo.Usuario;
 
 /**
@@ -31,75 +32,89 @@ public class TelaConfiguracoesAtivas extends JFrame {
     /**
      * Creates new form TelaConfiguraçõesAtivas
      */
+    Connection con = null;
     CanaisDAO dao = new CanaisDAO();
     UsuarioDAO daoUsu = new UsuarioDAO();
+    Secao secaoUsu = new Secao();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
     DefaultTableModel dm = (DefaultTableModel) dao.fetchBySize(0, 10);
     DefaultTableModel dmusu = (DefaultTableModel) daoUsu.fetchBySizeUsu(0, 10);
-    
     int indexAbas = 1;
     int indicePaginaCanais = 0;
     int indicePaginaUsuario = 0;
-    
+
     int paginaInicial = (int) dao.getRowCount();
     int paginaInicialUsu = (int) daoUsu.getRowCountUsu();
-    
-    
-    public TelaConfiguracoesAtivas(){
+
+    public TelaConfiguracoesAtivas() {
+
         initComponents();
-        atualizarTabela();
         
+        String sql = "SELECT email_user FROM secao where id_user = 1";
+        con = new ConexaoComBanco().getConnection();
+
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                secaoUsu.setEmail_user(rs.getString("email_user"));
+            }
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+
+        lbEmailPefil.setText((String)secaoUsu.getEmail_user());
+
+        atualizarTabela();
+
         //PAGINAÇÃO TABELA CANAIS
         tbDados.setModel(dm);
-        lbBtnPrev.setEnabled(false);
-        lbBtnInicio.setEnabled(false);
-        
-        if (paginaInicial <= 10){
-            lbBtnNext.setEnabled(false);
-            lbBtnFim.setEnabled(false);
+        btnPrev.setEnabled(false);
+        btnStart.setEnabled(false);
+
+        if (paginaInicial <= 10) {
+            btnNext.setEnabled(false);
+            btnEnd.setEnabled(false);
         }
         //PAGINAÇÃO TABELA USUARIO
         tbDadosUsu.setModel(dmusu);
-        lbBtnPrev1.setEnabled(false);
-        lbBtnInicio1.setEnabled(false);
-        
-        if (paginaInicialUsu <= 10){
-            lbBtnNext1.setEnabled(false);
-            lbBtnFim1.setEnabled(false);
+        btnPrev2.setEnabled(false);
+        btnStart2.setEnabled(false);
+
+        if (paginaInicialUsu <= 10) {
+            btnNext2.setEnabled(false);
+            btnEnd2.setEnabled(false);
         }
-        
+
         //GUIA DE ABAS
         PainelTabelaUsers.setVisible(false);
         PainelConfigUser.setVisible(false);
-        
-        if(indexAbas%2 != 0){
+
+        if (indexAbas % 2 != 0) {
             PainelTabelaAdm.setVisible(true);
             PainelConfigAdm.setVisible(true);
             btnPaginaCanais.setEnabled(false);
         }
-        
-        //Campos de Texto Invisíveis 
-        lbUsuario.setVisible(false);
-        lbSenha.setVisible(false);
-        txtUsuario.setVisible(false);
-        txtSenha.setVisible(false);
-        lbToken.setVisible(false);
-        txtToken.setVisible(false);
-        
-}
+
+    }
+
     class jPanelGradient extends JPanel {
+
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
             int height = getHeight();
-            
+
             Color color1 = new Color(48, 18, 78);
             Color color2 = new Color(200, 88, 51);
             GradientPaint gp = new GradientPaint(850, 0, color1, 0, height, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, width, height); 
-            
+            g2d.fillRect(0, 0, width, height);
+
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,6 +127,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
         painelMenu = new jPanelGradient();
         lbLogo = new javax.swing.JLabel();
         lbBtnPerfil = new javax.swing.JLabel();
+        lbEmailPefil = new javax.swing.JLabel();
         lbTexto = new javax.swing.JLabel();
         painelFundo = new javax.swing.JPanel();
         btnPaginaCanais = new javax.swing.JLabel();
@@ -120,31 +136,23 @@ public class TelaConfiguracoesAtivas extends JFrame {
         campoBuscaUser = new javax.swing.JTextField();
         jScrollPaneTabelaUser = new javax.swing.JScrollPane();
         tbDadosUsu = new javax.swing.JTable();
-        painelNavegUser = new javax.swing.JPanel();
-        painelBtnIni1 = new javax.swing.JPanel();
-        lbBtnInicio1 = new javax.swing.JLabel();
-        painelBtnPrev1 = new javax.swing.JPanel();
-        lbBtnPrev1 = new javax.swing.JLabel();
-        painelBtnNext1 = new javax.swing.JPanel();
-        lbBtnNext1 = new javax.swing.JLabel();
-        painelBtnFim1 = new javax.swing.JPanel();
-        lbBtnFim1 = new javax.swing.JLabel();
-        btnAtualizarTabela1 = new javax.swing.JButton();
         lbPesquiUser1 = new javax.swing.JLabel();
+        painelNaveg2 = new javax.swing.JPanel();
+        btnAtualizarTabela3 = new javax.swing.JButton();
+        btnStart2 = new javax.swing.JButton();
+        btnNext2 = new javax.swing.JButton();
+        btnPrev2 = new javax.swing.JButton();
+        btnEnd2 = new javax.swing.JButton();
         PainelTabelaAdm = new javax.swing.JPanel();
         campoBusca = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbDados = new javax.swing.JTable();
         painelNaveg = new javax.swing.JPanel();
         btnAtualizarTabela = new javax.swing.JButton();
-        painelBtnIni = new javax.swing.JPanel();
-        lbBtnInicio = new javax.swing.JLabel();
-        painelBtnPrev = new javax.swing.JPanel();
-        lbBtnPrev = new javax.swing.JLabel();
-        painelBtnNext = new javax.swing.JPanel();
-        lbBtnNext = new javax.swing.JLabel();
-        painelBtnFim = new javax.swing.JPanel();
-        lbBtnFim = new javax.swing.JLabel();
+        btnStart = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
+        btnPrev = new javax.swing.JButton();
+        btnEnd = new javax.swing.JButton();
         lbPesquiUser2 = new javax.swing.JLabel();
         PainelConfigUser = new javax.swing.JPanel();
         lbNomeUser = new javax.swing.JLabel();
@@ -167,12 +175,6 @@ public class TelaConfiguracoesAtivas extends JFrame {
         cbTipoCanal = new javax.swing.JComboBox<>();
         lbPadraoAutenticacao = new javax.swing.JLabel();
         cbPadraoAutenticacao = new javax.swing.JComboBox<>();
-        txtSenha = new javax.swing.JTextField();
-        lbSenha = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        lbUsuario = new javax.swing.JLabel();
-        txtToken = new javax.swing.JTextField();
-        lbToken = new javax.swing.JLabel();
         painelBotoes = new javax.swing.JPanel();
         painelBtnAdd = new javax.swing.JPanel();
         lbBtnAdd = new javax.swing.JLabel();
@@ -195,20 +197,29 @@ public class TelaConfiguracoesAtivas extends JFrame {
             }
         });
 
+        lbEmailPefil.setForeground(new java.awt.Color(255, 255, 255));
+        lbEmailPefil.setText("Teste");
+
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
         painelMenuLayout.setHorizontalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addComponent(lbLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 695, Short.MAX_VALUE)
-                .addComponent(lbBtnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 541, Short.MAX_VALUE)
+                .addComponent(lbBtnPerfil)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbEmailPefil)
+                .addGap(113, 113, 113))
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(lbBtnPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addGroup(painelMenuLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(lbEmailPefil)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lbTexto.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -280,161 +291,107 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         PainelTabelaUsers.add(jScrollPaneTabelaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 840, 233));
 
-        painelNavegUser.setBackground(new java.awt.Color(232, 232, 232));
-
-        painelBtnIni1.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnInicio1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnInicio1.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnInicio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnInicio1.setText("Início");
-        lbBtnInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnInicio1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnInicio1MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelBtnIni1Layout = new javax.swing.GroupLayout(painelBtnIni1);
-        painelBtnIni1.setLayout(painelBtnIni1Layout);
-        painelBtnIni1Layout.setHorizontalGroup(
-            painelBtnIni1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnIni1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnIni1Layout.setVerticalGroup(
-            painelBtnIni1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnIni1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnInicio1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        painelBtnPrev1.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnPrev1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnPrev1.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnPrev1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnPrev1.setText("<<");
-        lbBtnPrev1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnPrev1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnPrev1MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelBtnPrev1Layout = new javax.swing.GroupLayout(painelBtnPrev1);
-        painelBtnPrev1.setLayout(painelBtnPrev1Layout);
-        painelBtnPrev1Layout.setHorizontalGroup(
-            painelBtnPrev1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbBtnPrev1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-        );
-        painelBtnPrev1Layout.setVerticalGroup(
-            painelBtnPrev1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbBtnPrev1, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-        );
-
-        painelBtnNext1.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnNext1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnNext1.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnNext1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnNext1.setText(">>");
-        lbBtnNext1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnNext1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnNext1MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelBtnNext1Layout = new javax.swing.GroupLayout(painelBtnNext1);
-        painelBtnNext1.setLayout(painelBtnNext1Layout);
-        painelBtnNext1Layout.setHorizontalGroup(
-            painelBtnNext1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnNext1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnNext1Layout.setVerticalGroup(
-            painelBtnNext1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnNext1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        painelBtnFim1.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnFim1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnFim1.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnFim1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnFim1.setText("Fim");
-        lbBtnFim1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnFim1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnFim1MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelBtnFim1Layout = new javax.swing.GroupLayout(painelBtnFim1);
-        painelBtnFim1.setLayout(painelBtnFim1Layout);
-        painelBtnFim1Layout.setHorizontalGroup(
-            painelBtnFim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnFim1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnFim1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnFim1Layout.setVerticalGroup(
-            painelBtnFim1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnFim1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnFim1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        btnAtualizarTabela1.setBackground(new java.awt.Color(232, 232, 232));
-        btnAtualizarTabela1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnAtualizarTabela1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAtualizarTabela1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/atualizar.png"))); // NOI18N
-        btnAtualizarTabela1.setBorder(null);
-        btnAtualizarTabela1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAtualizarTabela1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarTabela1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelNavegUserLayout = new javax.swing.GroupLayout(painelNavegUser);
-        painelNavegUser.setLayout(painelNavegUserLayout);
-        painelNavegUserLayout.setHorizontalGroup(
-            painelNavegUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelNavegUserLayout.createSequentialGroup()
-                .addComponent(painelBtnIni1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(painelBtnPrev1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btnAtualizarTabela1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(painelBtnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(painelBtnFim1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        painelNavegUserLayout.setVerticalGroup(
-            painelNavegUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelNavegUserLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelNavegUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelBtnFim1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelBtnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelBtnIni1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtualizarTabela1)
-                    .addComponent(painelBtnPrev1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        PainelTabelaUsers.add(painelNavegUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 310, 30));
-
         lbPesquiUser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
         PainelTabelaUsers.add(lbPesquiUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 30, 30));
+
+        painelNaveg2.setBackground(new java.awt.Color(232, 232, 232));
+
+        btnAtualizarTabela3.setBackground(new java.awt.Color(232, 232, 232));
+        btnAtualizarTabela3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAtualizarTabela3.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtualizarTabela3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/atualizar.png"))); // NOI18N
+        btnAtualizarTabela3.setBorder(null);
+        btnAtualizarTabela3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAtualizarTabela3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarTabela3ActionPerformed(evt);
+            }
+        });
+
+        btnStart2.setBackground(new java.awt.Color(217, 90, 48));
+        btnStart2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnStart2.setForeground(new java.awt.Color(255, 255, 255));
+        btnStart2.setText("Inicio");
+        btnStart2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStart2ActionPerformed(evt);
+            }
+        });
+
+        btnNext2.setBackground(new java.awt.Color(217, 90, 48));
+        btnNext2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNext2.setForeground(new java.awt.Color(255, 255, 255));
+        btnNext2.setText(">>");
+        btnNext2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNext2MouseClicked(evt);
+            }
+        });
+        btnNext2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNext2ActionPerformed(evt);
+            }
+        });
+
+        btnPrev2.setBackground(new java.awt.Color(217, 90, 48));
+        btnPrev2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPrev2.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrev2.setText("<<");
+        btnPrev2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPrev2MouseClicked(evt);
+            }
+        });
+        btnPrev2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrev2ActionPerformed(evt);
+            }
+        });
+
+        btnEnd2.setBackground(new java.awt.Color(217, 90, 48));
+        btnEnd2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEnd2.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnd2.setText("Fim");
+        btnEnd2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnd2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelNaveg2Layout = new javax.swing.GroupLayout(painelNaveg2);
+        painelNaveg2.setLayout(painelNaveg2Layout);
+        painelNaveg2Layout.setHorizontalGroup(
+            painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelNaveg2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnStart2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPrev2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnAtualizarTabela3)
+                .addGap(12, 12, 12)
+                .addComponent(btnNext2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEnd2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        painelNaveg2Layout.setVerticalGroup(
+            painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelNaveg2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNext2)
+                        .addComponent(btnEnd2))
+                    .addGroup(painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAtualizarTabela3)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnStart2)
+                            .addComponent(btnPrev2))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PainelTabelaUsers.add(painelNaveg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 310, 40));
 
         painelFundo.add(PainelTabelaUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 880, 340));
 
@@ -458,14 +415,14 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         tbDados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "Canais", "Tipo", "Padão de Autentificação", "Token", "Senha"
+                "Id", "Canais", "Tipo", "Padão de Autentificação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -498,148 +455,90 @@ public class TelaConfiguracoesAtivas extends JFrame {
             }
         });
 
-        painelBtnIni.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnInicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnInicio.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnInicio.setText("Início");
-        lbBtnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnInicioMouseClicked(evt);
+        btnStart.setBackground(new java.awt.Color(217, 90, 48));
+        btnStart.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnStart.setForeground(new java.awt.Color(255, 255, 255));
+        btnStart.setText("Inicio");
+        btnStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout painelBtnIniLayout = new javax.swing.GroupLayout(painelBtnIni);
-        painelBtnIni.setLayout(painelBtnIniLayout);
-        painelBtnIniLayout.setHorizontalGroup(
-            painelBtnIniLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnIniLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnIniLayout.setVerticalGroup(
-            painelBtnIniLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnIniLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        painelBtnPrev.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnPrev.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnPrev.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnPrev.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnPrev.setText("<<");
-        lbBtnPrev.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNext.setBackground(new java.awt.Color(217, 90, 48));
+        btnNext.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNext.setForeground(new java.awt.Color(255, 255, 255));
+        btnNext.setText(">>");
+        btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnPrevMouseClicked(evt);
+                btnNextMouseClicked(evt);
+            }
+        });
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout painelBtnPrevLayout = new javax.swing.GroupLayout(painelBtnPrev);
-        painelBtnPrev.setLayout(painelBtnPrevLayout);
-        painelBtnPrevLayout.setHorizontalGroup(
-            painelBtnPrevLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnPrevLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnPrevLayout.setVerticalGroup(
-            painelBtnPrevLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnPrevLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        painelBtnNext.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnNext.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnNext.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnNext.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnNext.setText(">>");
-        lbBtnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPrev.setBackground(new java.awt.Color(217, 90, 48));
+        btnPrev.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPrev.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrev.setText("<<");
+        btnPrev.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnNextMouseClicked(evt);
+                btnPrevMouseClicked(evt);
+            }
+        });
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout painelBtnNextLayout = new javax.swing.GroupLayout(painelBtnNext);
-        painelBtnNext.setLayout(painelBtnNextLayout);
-        painelBtnNextLayout.setHorizontalGroup(
-            painelBtnNextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnNextLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnNextLayout.setVerticalGroup(
-            painelBtnNextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnNextLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        painelBtnFim.setBackground(new java.awt.Color(200, 88, 51));
-
-        lbBtnFim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBtnFim.setForeground(new java.awt.Color(255, 255, 255));
-        lbBtnFim.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBtnFim.setText("Fim");
-        lbBtnFim.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnFim.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnFimMouseClicked(evt);
+        btnEnd.setBackground(new java.awt.Color(217, 90, 48));
+        btnEnd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEnd.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnd.setText("Fim");
+        btnEnd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEndActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout painelBtnFimLayout = new javax.swing.GroupLayout(painelBtnFim);
-        painelBtnFim.setLayout(painelBtnFimLayout);
-        painelBtnFimLayout.setHorizontalGroup(
-            painelBtnFimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnFimLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnFim, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        painelBtnFimLayout.setVerticalGroup(
-            painelBtnFimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBtnFimLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbBtnFim, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
 
         javax.swing.GroupLayout painelNavegLayout = new javax.swing.GroupLayout(painelNaveg);
         painelNaveg.setLayout(painelNavegLayout);
         painelNavegLayout.setHorizontalGroup(
             painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelNavegLayout.createSequentialGroup()
-                .addComponent(painelBtnIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(painelBtnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(btnAtualizarTabela)
+                .addGap(12, 12, 12)
+                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(painelBtnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(painelBtnFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         painelNavegLayout.setVerticalGroup(
             painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelNavegLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelBtnFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelBtnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelBtnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelBtnIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtualizarTabela))
+                .addGroup(painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNext)
+                        .addComponent(btnEnd))
+                    .addGroup(painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAtualizarTabela)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnStart)
+                            .addComponent(btnPrev))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PainelTabelaAdm.add(painelNaveg, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, 310, 30));
+        PainelTabelaAdm.add(painelNaveg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 310, 40));
 
         lbPesquiUser2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
         PainelTabelaAdm.add(lbPesquiUser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 30, 30));
@@ -819,27 +718,6 @@ public class TelaConfiguracoesAtivas extends JFrame {
             }
         });
         PainelConfigAdm.add(cbPadraoAutenticacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 147, -1));
-        PainelConfigAdm.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 130, -1));
-
-        lbSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbSenha.setText("Senha:");
-        PainelConfigAdm.add(lbSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
-
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
-        PainelConfigAdm.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 130, -1));
-
-        lbUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbUsuario.setText("Usuário:");
-        PainelConfigAdm.add(lbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, -1, -1));
-        PainelConfigAdm.add(txtToken, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 130, -1));
-
-        lbToken.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbToken.setText("Token:");
-        PainelConfigAdm.add(lbToken, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, -1, -1));
 
         painelBotoes.setBackground(new java.awt.Color(249, 250, 251));
 
@@ -980,98 +858,13 @@ public class TelaConfiguracoesAtivas extends JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField_pesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_pesqActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_pesqActionPerformed
-
-    private void btnAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaActionPerformed
-        // Botão atualizar tabela:
-        atualizarTabela();
-    }//GEN-LAST:event_btnAtualizarTabelaActionPerformed
-
     private void cbTipoCanalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoCanalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTipoCanalActionPerformed
 
     private void cbPadraoAutenticacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPadraoAutenticacaoActionPerformed
-        // TODO add your handling code here:
-if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
-            //Define o Campo de Texto Token como visível
-            txtSenha.setText("");
-            txtUsuario.setText("");
-            txtToken.setVisible(true);
-            lbToken.setVisible(true);
-            txtSenha.setVisible(false);
-            lbSenha.setVisible(false);
-            lbUsuario.setVisible(false);
-            txtUsuario.setVisible(false);
-        }
-        else if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Senha")){
-            //Define o Campo de Texto Senha como visível
-            txtToken.setText("");
-            txtToken.setVisible(false);
-            lbToken.setVisible(false);
-            txtSenha.setVisible(true);
-            lbSenha.setVisible(true);
-            lbUsuario.setVisible(true);
-            txtUsuario.setVisible(true);
-        }
-        else {
-            //Volta ao estado original 
-            txtSenha.setText("");
-            txtUsuario.setText("");
-            txtToken.setText("");
-            txtToken.setVisible(false);
-            lbToken.setVisible(false);
-            txtSenha.setVisible(false);
-            lbSenha.setVisible(false);
-            lbUsuario.setVisible(false);
-            txtUsuario.setVisible(false);
-            
-        }
+
     }//GEN-LAST:event_cbPadraoAutenticacaoActionPerformed
-
-    private void tbDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosMouseClicked
-        // TODO add your handling code here:
-        if(tbDados.getSelectedRow()!= -1){ 
-            txtNomeCanal.setText(tbDados.getValueAt(tbDados.getSelectedRow(), 1).toString());
-        }
-    }//GEN-LAST:event_tbDadosMouseClicked
-
-    private void campoBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscaKeyTyped
-        // TODO add your handling code here:
-        try {
-            ConexaoComBanco ccb = new ConexaoComBanco();
-            Connection connection = ccb.getConnection(); 
-            String sql = "SELECT * FROM canais WHERE nome_canal LIKE ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, "%"+campoBusca.getText()+"%");
-            ResultSet rs = stmt.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) tbDados.getModel();
-            modelo.setNumRows(0);
-                while (rs.next()) {
-                    modelo.addRow(new Object[]{rs.getInt("id_canais"),
-                                               rs.getString("nome_canal"),
-                                               rs.getString("tipo_canal"),
-                                               rs.getString("padrao_autenticacao"),
-                                               rs.getString("token"),
-                                               rs.getString("senha_canal")
-                                               });
-                }
-                rs.close();
-                connection.close();
-            } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_campoBuscaKeyTyped
-
-    private void campoBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoBuscaKeyPressed
-
-    private void tbDadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbDadosMousePressed
 
     private void campoBuscaUserjTextField_pesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBuscaUserjTextField_pesqActionPerformed
         // TODO add your handling code here:
@@ -1085,30 +878,29 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
         // TODO add your handling code here:
         try {
             ConexaoComBanco ccb = new ConexaoComBanco();
-            Connection connection = ccb.getConnection(); 
+            Connection connection = ccb.getConnection();
             String sql = "SELECT * FROM usuario WHERE nome_usuario LIKE ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, "%"+campoBuscaUser.getText()+"%");
+            stmt.setString(1, "%" + campoBuscaUser.getText() + "%");
             ResultSet rs = stmt.executeQuery();
             DefaultTableModel modeloUsu = (DefaultTableModel) tbDadosUsu.getModel();
             modeloUsu.setNumRows(0);
-                while (rs.next()) {
-                    modeloUsu.addRow(new Object[]{rs.getInt("id_usuario"),
-                                               rs.getString("email_usuario"),
-                                               rs.getString("nome_usuario"),
-                                               rs.getString("senha_usuario"),
-                                               });
-                }
-                rs.close();
-                connection.close();
-            } catch (SQLException e) {
+            while (rs.next()) {
+                modeloUsu.addRow(new Object[]{rs.getInt("id_usuario"),
+                    rs.getString("nome_usuario"),
+                    rs.getString("email_usuario"),
+                    rs.getString("senha_usuario"),});
+            }
+            rs.close();
+            connection.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_campoBuscaUserKeyTyped
 
     private void tbDadosUsuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosUsuMouseClicked
         // TODO add your handling code here:
-        if(tbDados.getSelectedRow()!= -1){ 
+        if (tbDados.getSelectedRow() != -1) {
             txtNomeUser.setText(tbDadosUsu.getValueAt(tbDadosUsu.getSelectedRow(), 1).toString());
             txtEmail.setText(tbDadosUsu.getValueAt(tbDadosUsu.getSelectedRow(), 2).toString());
             txtSenhaUser.setText(tbDadosUsu.getValueAt(tbDadosUsu.getSelectedRow(), 3).toString());
@@ -1118,11 +910,6 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private void tbDadosUsuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosUsuMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_tbDadosUsuMousePressed
-
-    private void btnAtualizarTabela1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabela1ActionPerformed
-        // TODO add your handling code here:
-        atualizarTabelaUsu();
-    }//GEN-LAST:event_btnAtualizarTabela1ActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
@@ -1135,12 +922,12 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private void btnPaginaCanaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPaginaCanaisMouseClicked
         // TODO add your handling code here:
         indexAbas = indexAbas + 1;
-        if(indexAbas%2 != 0){
+        if (indexAbas % 2 != 0) {
             PainelTabelaAdm.setVisible(true);
             PainelConfigAdm.setVisible(true);
             PainelTabelaUsers.setVisible(false);
             PainelConfigUser.setVisible(false);
-            
+
             btnPaginaCanais.setEnabled(false);
             btnPaginaUsuario.setEnabled(true);
         }
@@ -1149,196 +936,37 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private void btnPaginaUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPaginaUsuarioMouseClicked
         // TODO add your handling code here:
         indexAbas = indexAbas + 1;
-        if(indexAbas%2 == 0){
+        if (indexAbas % 2 == 0) {
             PainelTabelaUsers.setVisible(true);
             PainelConfigUser.setVisible(true);
             PainelTabelaAdm.setVisible(false);
             PainelConfigAdm.setVisible(false);
-            
+
             btnPaginaUsuario.setEnabled(false);
             btnPaginaCanais.setEnabled(true);
         }
     }//GEN-LAST:event_btnPaginaUsuarioMouseClicked
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-
-    private void lbBtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnInicioMouseClicked
-        // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(0, 10);
-        tbDados.setModel(pagina);
-        lbBtnInicio.setEnabled(false);
-        lbBtnPrev.setEnabled(false);
-        lbBtnNext.setEnabled(true);
-        lbBtnFim.setEnabled(true);
-        indicePaginaCanais = 0;
-    }//GEN-LAST:event_lbBtnInicioMouseClicked
-
-    private void lbBtnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnPrevMouseClicked
-        // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-        //(currentPage, totalPages);
-        
-        int tamanho = indicePaginaCanais-10;
-        
-        lbBtnNext.setEnabled(true);
-        lbBtnFim.setEnabled(true);
-        
-        if(tamanho == 0){
-            lbBtnPrev.setEnabled(false);
-            lbBtnInicio.setEnabled(false);
-        }else{
-            lbBtnPrev.setEnabled(true);
-            lbBtnInicio.setEnabled(true);  
-        }
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
-        tbDados.setModel(pagina);
-        
-    }//GEN-LAST:event_lbBtnPrevMouseClicked
-
-    private void lbBtnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnNextMouseClicked
-        // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-
-        //(currentPage, totalPages);
-        int index = (int)dao.getRowCount();
-        int tamanho = indicePaginaCanais+10;
-        
-        int resultado = index - tamanho;
-        
-        if(resultado < 10){
-            lbBtnNext.setEnabled(false);
-            lbBtnFim.setEnabled(false);
-        }
-        
-        if(tamanho == 0){
-            lbBtnPrev.setEnabled(false);
-            lbBtnInicio.setEnabled(false);
-        }else{
-            lbBtnPrev.setEnabled(true);
-            lbBtnInicio.setEnabled(true);  
-        }
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
-        tbDados.setModel(pagina);
-    }//GEN-LAST:event_lbBtnNextMouseClicked
-
-    private void lbBtnFimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnFimMouseClicked
-        // TODO add your handling code here:
-        
-          CanaisDAO dao = new CanaisDAO();
-          int index = (int) dao.getRowCount();
-          
-          int valorfinal = index/10;
-          int valortotal = valorfinal*10;
-          System.out.println(valorfinal);
-          DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(valortotal, 10);
-          tbDados.setModel(pagina);
-          lbBtnNext.setEnabled(false);
-          lbBtnFim.setEnabled(false);
-          lbBtnInicio.setEnabled(true);
-          lbBtnPrev.setEnabled(true);
-          indicePaginaCanais = valortotal;
-    }//GEN-LAST:event_lbBtnFimMouseClicked
-
-    private void lbBtnInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnInicio1MouseClicked
-        // TODO add your handling code here:
-        UsuarioDAO daoUsu = new UsuarioDAO();
-        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(0, 10);
-        
-        tbDadosUsu.setModel(paginaUsu);
-        lbBtnInicio1.setEnabled(false);
-        lbBtnPrev1.setEnabled(false);
-        lbBtnNext1.setEnabled(true);
-        lbBtnFim1.setEnabled(true);
-        indicePaginaUsuario = 0;
-    }//GEN-LAST:event_lbBtnInicio1MouseClicked
-
-    private void lbBtnPrev1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnPrev1MouseClicked
-        // TODO add your handling code here:
-        UsuarioDAO daoUsu = new UsuarioDAO();
-        //(currentPage, totalPages);
-        
-        int tamanhoUsu = indicePaginaUsuario-10;
-        
-        lbBtnNext1.setEnabled(true);
-        lbBtnFim1.setEnabled(true);
-        
-        if(tamanhoUsu == 0){
-            lbBtnPrev1.setEnabled(false);
-            lbBtnInicio1.setEnabled(false);
-        }else{
-            lbBtnPrev1.setEnabled(true);
-            lbBtnInicio1.setEnabled(true);  
-        }
-        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(tamanhoUsu, 10);
-        tbDadosUsu.setModel(paginaUsu);
-    }//GEN-LAST:event_lbBtnPrev1MouseClicked
-
-    private void lbBtnNext1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnNext1MouseClicked
-        // TODO add your handling code here:
-        UsuarioDAO daoUsu = new UsuarioDAO();
-
-        //(currentPage, totalPages);
-        int index = (int)daoUsu.getRowCountUsu();
-        int tamanhoUsu = indicePaginaUsuario+10;
-        
-        int resultado = index - tamanhoUsu;
-        
-        if(resultado < 10){
-            lbBtnNext1.setEnabled(false);
-            lbBtnFim1.setEnabled(false);
-        }
-        
-        if(tamanhoUsu == 0){
-            lbBtnPrev1.setEnabled(false);
-            lbBtnInicio1.setEnabled(false);
-        }else{
-            lbBtnPrev1.setEnabled(true);
-            lbBtnInicio1.setEnabled(true);  
-        }
-        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(tamanhoUsu, 10);
-        tbDadosUsu.setModel(paginaUsu);  
-    }//GEN-LAST:event_lbBtnNext1MouseClicked
-
-    private void lbBtnFim1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnFim1MouseClicked
-        // TODO add your handling code here:
-        UsuarioDAO daoUsu = new UsuarioDAO();
-        int indexTbUsu = (int) daoUsu.getRowCountUsu();
-          
-        int valorfinal = indexTbUsu/10;
-        int valortotal = valorfinal*10;
-        System.out.println(valorfinal);
-        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(valortotal, 10);
-        tbDadosUsu.setModel(paginaUsu);
-        lbBtnNext1.setEnabled(false);
-        lbBtnFim1.setEnabled(false);
-        lbBtnInicio1.setEnabled(true);
-        lbBtnPrev1.setEnabled(true);
-        indicePaginaUsuario = valortotal;
-    }//GEN-LAST:event_lbBtnFim1MouseClicked
-
     private void lbBtnAddUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnAddUserMouseClicked
         // TODO add your handling code here:
         Usuario usuario = new Usuario();
         UsuarioDAO daoUsu = new UsuarioDAO();
-        
-        if(txtNomeUser.getText().isEmpty()||txtEmail.getText().isEmpty()||txtSenhaUser.getText().isEmpty()){
+
+        if (txtNomeUser.getText().isEmpty() || txtEmail.getText().isEmpty() || txtSenhaUser.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "ATENÇÃO - Preencha todos os campos !");
-        }else{
+        } else {
             usuario.setNome_usuario(txtNomeUser.getText());
             usuario.setEmail_usuario(txtEmail.getText());
             usuario.setSenha_usuario(txtSenhaUser.getText());
             daoUsu.adicionaUsuario(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario "+txtNomeUser.getText()+" Cadastrado com sucesso !");
-            }
+            JOptionPane.showMessageDialog(null, "Usuario " + txtNomeUser.getText() + " Cadastrado com sucesso !");
+        }
         atualizarTabelaUsu();
     }//GEN-LAST:event_lbBtnAddUserMouseClicked
 
     private void lbBtnExcluirUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnExcluirUserMouseClicked
         // TODO add your handling code here:
-        if (tbDadosUsu.getSelectedRow()!= -1){
+        if (tbDadosUsu.getSelectedRow() != -1) {
             ConexaoComBanco ccb = new ConexaoComBanco();
             Connection connection = ccb.getConnection();
             int row = tbDadosUsu.getSelectedRow();
@@ -1353,7 +981,7 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }
         atualizarTabelaUsu();
@@ -1364,37 +992,30 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
         Canais canais = new Canais();
         CanaisDAO dao = new CanaisDAO();
 
-        if((txtNomeCanal.getText().isEmpty())){
+        if ((txtNomeCanal.getText().isEmpty())) {
             JOptionPane.showMessageDialog(null, "ATENÇÃO - Preencha todos os campos !");
-        }else{
+        } else {
 
             canais.setNomecanal(txtNomeCanal.getText());
 
             int indexTipoCanal = cbTipoCanal.getSelectedIndex();
             int indexPadrao = cbPadraoAutenticacao.getSelectedIndex();
-            
-            canais.setUsuariocanal(txtUsuario.getText());
-            canais.setSenhacanal(txtSenha.getText());
-            canais.setToken(txtToken.getText());
 
-            if (indexTipoCanal == 0){
+            if (indexTipoCanal == 0) {
                 canais.setTipocanal("MarketPlace");
-            }else if(indexTipoCanal == 1){
+            } else if (indexTipoCanal == 1) {
                 canais.setTipocanal("Plataforma ERP");
-            }else if(indexTipoCanal == 2){
+            } else if (indexTipoCanal == 2) {
                 canais.setTipocanal("Forma de Pagamento");
             }
-            if (indexPadrao == 1){
+            if (indexPadrao == 1) {
                 canais.setPadraoautenticacao("Token");
-            }else if(indexPadrao == 2){
+            } else if (indexPadrao == 2) {
                 canais.setPadraoautenticacao("Senha");
             }
             dao.saveusu(canais);
-            JOptionPane.showMessageDialog(null, "Canal "+txtNomeCanal.getText()+" Cadastrado com sucesso !");
+            JOptionPane.showMessageDialog(null, "Canal " + txtNomeCanal.getText() + " Cadastrado com sucesso !");
             txtNomeCanal.setText("");
-            txtUsuario.setText("");
-            txtSenha.setText("");
-            txtToken.setText("");
             atualizarTabela();
         }
     }//GEN-LAST:event_lbBtnAddMouseClicked
@@ -1402,7 +1023,7 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private void lbBtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnEditarMouseClicked
         //Botão de Atualizar dados dados da Tabela
 
-        if (tbDados.getSelectedRow()!= -1){
+        if (tbDados.getSelectedRow() != -1) {
 
             Canais canais = new Canais();
             CanaisDAO dao = new CanaisDAO();
@@ -1411,26 +1032,20 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
             canais.setNomecanal(txtNomeCanal.getText());
             canais.setTipocanal(cbTipoCanal.getItemAt(cbTipoCanal.getSelectedIndex()));
             canais.setPadraoautenticacao(cbPadraoAutenticacao.getItemAt(cbPadraoAutenticacao.getSelectedIndex()));
-            canais.setToken(txtToken.getText());
-            canais.setUsuariocanal(txtUsuario.getText());
-            canais.setSenhacanal(txtSenha.getText());
-            
+
             dao.update(canais);
 
             txtNomeCanal.setText("");
-            txtUsuario.setText("");
-            txtSenha.setText("");
-            txtToken.setText("");
 
             atualizarTabela();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }
     }//GEN-LAST:event_lbBtnEditarMouseClicked
 
     private void lbBtnExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnExcluirMouseClicked
         // Botão excluir:
-        if (tbDados.getSelectedRow()!= -1){
+        if (tbDados.getSelectedRow() != -1) {
             ConexaoComBanco ccb = new ConexaoComBanco();
             Connection connection = ccb.getConnection();
             int row = tbDados.getSelectedRow();
@@ -1445,7 +1060,7 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }
         atualizarTabela();
@@ -1453,7 +1068,7 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
 
     private void lbBtnEditarUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnEditarUserMouseClicked
         // TODO add your handling code here:
-        if (tbDadosUsu.getSelectedRow()!= -1){
+        if (tbDadosUsu.getSelectedRow() != -1) {
 
             Usuario usuario = new Usuario();
             UsuarioDAO daoUsu = new UsuarioDAO();
@@ -1470,17 +1085,241 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
             txtSenhaUser.setText("");
 
             atualizarTabelaUsu();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }
     }//GEN-LAST:event_lbBtnEditarUserMouseClicked
 
     private void lbBtnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnPerfilMouseClicked
         // TODO add your handling code here:
-        TelaLogin login = new TelaLogin();
-        login.setVisible(true);
+        TelaConfiguracoesConta telaConfigConta = new TelaConfiguracoesConta();
+        telaConfigConta.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lbBtnPerfilMouseClicked
+
+    private void btnEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndActionPerformed
+        // TODO add your handling code here:
+        CanaisDAO dao = new CanaisDAO();
+        int index = (int) dao.getRowCount();
+
+        int valorfinal = index / 10;
+        int valortotal = valorfinal * 10;
+        System.out.println(valorfinal);
+        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(valortotal, 10);
+        tbDados.setModel(pagina);
+        btnNext.setEnabled(false);
+        btnEnd.setEnabled(false);
+        btnStart.setEnabled(true);
+        btnPrev.setEnabled(true);
+        indicePaginaCanais = valortotal;
+    }//GEN-LAST:event_btnEndActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        int tamanho = indicePaginaCanais - 10;
+        CanaisDAO dao = new CanaisDAO();
+        //(currentPage, totalPages);
+        btnNext.setEnabled(true);
+        btnEnd.setEnabled(true);
+
+        if (tamanho == 0) {
+            btnPrev.setEnabled(false);
+            btnStart.setEnabled(false);
+        } else {
+            btnPrev.setEnabled(true);
+            btnEnd.setEnabled(true);
+        }
+        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
+        tbDados.setModel(pagina);
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
+        // TODO add your handling code here:
+        indicePaginaCanais = indicePaginaCanais - 10;
+    }//GEN-LAST:event_btnPrevMouseClicked
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        CanaisDAO dao = new CanaisDAO();
+
+        //(currentPage, totalPages);
+        int index = (int) dao.getRowCount();
+        int tamanho = indicePaginaCanais + 10;
+
+        int resultado = index - tamanho;
+
+        if (resultado < 10) {
+            btnNext.setEnabled(false);
+            btnEnd.setEnabled(false);
+        }
+
+        if (tamanho == 0) {
+            btnPrev.setEnabled(false);
+            btnStart.setEnabled(false);
+        } else {
+            btnPrev.setEnabled(true);
+            btnStart.setEnabled(true);
+        }
+        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
+        tbDados.setModel(pagina);
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
+        // TODO add your handling code here:
+        indicePaginaCanais = indicePaginaCanais + 10;
+    }//GEN-LAST:event_btnNextMouseClicked
+
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+        // TODO add your handling code here:
+        CanaisDAO dao = new CanaisDAO();
+        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(0, 10);
+        tbDados.setModel(pagina);
+        btnStart.setEnabled(false);
+        btnPrev.setEnabled(false);
+        btnNext.setEnabled(true);
+        btnEnd.setEnabled(true);
+        indicePaginaCanais = 0;
+    }//GEN-LAST:event_btnStartActionPerformed
+
+    private void btnAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaActionPerformed
+        // Botão atualizar tabela:
+        atualizarTabela();
+    }//GEN-LAST:event_btnAtualizarTabelaActionPerformed
+
+    private void tbDadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbDadosMousePressed
+
+    private void tbDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDadosMouseClicked
+        // TODO add your handling code here:
+        if (tbDados.getSelectedRow() != -1) {
+            txtNomeCanal.setText(tbDados.getValueAt(tbDados.getSelectedRow(), 1).toString());
+        }
+    }//GEN-LAST:event_tbDadosMouseClicked
+
+    private void campoBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscaKeyTyped
+        // TODO add your handling code here:
+        try {
+            ConexaoComBanco ccb = new ConexaoComBanco();
+            Connection connection = ccb.getConnection();
+            String sql = "SELECT * FROM canais WHERE nome_canal LIKE ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + campoBusca.getText() + "%");
+            ResultSet rs = stmt.executeQuery();
+            DefaultTableModel modelo = (DefaultTableModel) tbDados.getModel();
+            modelo.setNumRows(0);
+            while (rs.next()) {
+                modelo.addRow(new Object[]{rs.getInt("id_canais"),
+                    rs.getString("nome_canal"),
+                    rs.getString("tipo_canal"),
+                    rs.getString("padrao_autenticacao"),});
+            }
+            rs.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_campoBuscaKeyTyped
+
+    private void campoBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBuscaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoBuscaKeyPressed
+
+    private void jTextField_pesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_pesqActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_pesqActionPerformed
+
+    private void btnAtualizarTabela3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabela3ActionPerformed
+        // TODO add your handling code here:
+        atualizarTabelaUsu();
+    }//GEN-LAST:event_btnAtualizarTabela3ActionPerformed
+
+    private void btnStart2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart2ActionPerformed
+        // TODO add your handling code here:
+        UsuarioDAO daoUsu = new UsuarioDAO();
+        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(0, 10);
+
+        tbDadosUsu.setModel(paginaUsu);
+        btnStart2.setEnabled(false);
+        btnPrev2.setEnabled(false);
+        btnNext2.setEnabled(true);
+        btnEnd2.setEnabled(true);
+        indicePaginaUsuario = 0;
+    }//GEN-LAST:event_btnStart2ActionPerformed
+
+    private void btnNext2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNext2MouseClicked
+        // TODO add your handling code here:
+        indicePaginaUsuario = indicePaginaUsuario + 10;
+    }//GEN-LAST:event_btnNext2MouseClicked
+
+    private void btnNext2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext2ActionPerformed
+        // TODO add your handling code here:
+        UsuarioDAO daoUsu = new UsuarioDAO();
+
+        //(currentPage, totalPages);
+        int index = (int) daoUsu.getRowCountUsu();
+        int tamanhoUsu = indicePaginaUsuario + 10;
+
+        int resultado = index - tamanhoUsu;
+
+        if (resultado < 10) {
+            btnNext2.setEnabled(false);
+            btnEnd2.setEnabled(false);
+        }
+
+        if (tamanhoUsu == 0) {
+            btnPrev2.setEnabled(false);
+            btnStart2.setEnabled(false);
+        } else {
+            btnPrev2.setEnabled(true);
+            btnStart2.setEnabled(true);
+        }
+        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(tamanhoUsu, 10);
+        tbDadosUsu.setModel(paginaUsu);
+    }//GEN-LAST:event_btnNext2ActionPerformed
+
+    private void btnPrev2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrev2MouseClicked
+        // TODO add your handling code here:
+        indicePaginaUsuario = indicePaginaUsuario - 10;
+    }//GEN-LAST:event_btnPrev2MouseClicked
+
+    private void btnPrev2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrev2ActionPerformed
+        // TODO add your handling code here:
+        UsuarioDAO daoUsu = new UsuarioDAO();
+        //(currentPage, totalPages);
+
+        int tamanhoUsu = indicePaginaUsuario - 10;
+
+        btnNext2.setEnabled(true);
+        btnEnd2.setEnabled(true);
+
+        if (tamanhoUsu == 0) {
+            btnPrev2.setEnabled(false);
+            btnStart2.setEnabled(false);
+        } else {
+            btnPrev2.setEnabled(true);
+            btnStart2.setEnabled(true);
+        }
+        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(tamanhoUsu, 10);
+        tbDadosUsu.setModel(paginaUsu);
+    }//GEN-LAST:event_btnPrev2ActionPerformed
+
+    private void btnEnd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnd2ActionPerformed
+        // TODO add your handling code here:
+        UsuarioDAO daoUsu = new UsuarioDAO();
+        int indexTbUsu = (int) daoUsu.getRowCountUsu();
+
+        int valorfinal = indexTbUsu / 10;
+        int valortotal = valorfinal * 10;
+        System.out.println(valorfinal);
+        DefaultTableModel paginaUsu = (DefaultTableModel) daoUsu.fetchBySizeUsu(valortotal, 10);
+        tbDadosUsu.setModel(paginaUsu);
+        btnNext2.setEnabled(false);
+        btnEnd2.setEnabled(false);
+        btnStart2.setEnabled(true);
+        btnPrev2.setEnabled(true);
+        indicePaginaUsuario = valortotal;
+    }//GEN-LAST:event_btnEnd2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1517,8 +1356,7 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
             }
         });
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelConfigAdm;
@@ -1526,9 +1364,17 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private javax.swing.JPanel PainelTabelaAdm;
     private javax.swing.JPanel PainelTabelaUsers;
     private javax.swing.JButton btnAtualizarTabela;
-    private javax.swing.JButton btnAtualizarTabela1;
+    private javax.swing.JButton btnAtualizarTabela3;
+    private javax.swing.JButton btnEnd;
+    private javax.swing.JButton btnEnd2;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnNext2;
     private javax.swing.JLabel btnPaginaCanais;
     private javax.swing.JLabel btnPaginaUsuario;
+    private javax.swing.JButton btnPrev;
+    private javax.swing.JButton btnPrev2;
+    private javax.swing.JButton btnStart;
+    private javax.swing.JButton btnStart2;
     private javax.swing.JTextField campoBusca;
     private javax.swing.JTextField campoBuscaUser;
     private javax.swing.JComboBox<String> cbPadraoAutenticacao;
@@ -1541,28 +1387,18 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private javax.swing.JLabel lbBtnEditarUser;
     private javax.swing.JLabel lbBtnExcluir;
     private javax.swing.JLabel lbBtnExcluirUser;
-    private javax.swing.JLabel lbBtnFim;
-    private javax.swing.JLabel lbBtnFim1;
-    private javax.swing.JLabel lbBtnInicio;
-    private javax.swing.JLabel lbBtnInicio1;
-    private javax.swing.JLabel lbBtnNext;
-    private javax.swing.JLabel lbBtnNext1;
     private javax.swing.JLabel lbBtnPerfil;
-    private javax.swing.JLabel lbBtnPrev;
-    private javax.swing.JLabel lbBtnPrev1;
     private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lbEmailPefil;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbNomeCanal;
     private javax.swing.JLabel lbNomeUser;
     private javax.swing.JLabel lbPadraoAutenticacao;
     private javax.swing.JLabel lbPesquiUser1;
     private javax.swing.JLabel lbPesquiUser2;
-    private javax.swing.JLabel lbSenha;
     private javax.swing.JLabel lbSenhaUser;
     private javax.swing.JLabel lbTexto;
     private javax.swing.JLabel lbTipoCanal;
-    private javax.swing.JLabel lbToken;
-    private javax.swing.JLabel lbUsuario;
     private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelBotoesUser;
     private javax.swing.JPanel painelBtnAdd;
@@ -1571,95 +1407,82 @@ if(cbPadraoAutenticacao.getSelectedItem().toString().equalsIgnoreCase("Token")){
     private javax.swing.JPanel painelBtnEditarUser;
     private javax.swing.JPanel painelBtnExcluir;
     private javax.swing.JPanel painelBtnExcluirUser;
-    private javax.swing.JPanel painelBtnFim;
-    private javax.swing.JPanel painelBtnFim1;
-    private javax.swing.JPanel painelBtnIni;
-    private javax.swing.JPanel painelBtnIni1;
-    private javax.swing.JPanel painelBtnNext;
-    private javax.swing.JPanel painelBtnNext1;
-    private javax.swing.JPanel painelBtnPrev;
-    private javax.swing.JPanel painelBtnPrev1;
     private javax.swing.JPanel painelFundo;
     private javax.swing.JPanel painelMenu;
     private javax.swing.JPanel painelNaveg;
-    private javax.swing.JPanel painelNavegUser;
+    private javax.swing.JPanel painelNaveg2;
     private javax.swing.JTable tbDados;
     private javax.swing.JTable tbDadosUsu;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNomeCanal;
     private javax.swing.JTextField txtNomeUser;
-    private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtSenhaUser;
-    private javax.swing.JTextField txtToken;
-    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
     private void atualizarTabela() {
-        
+
         try {
             ConexaoComBanco ccb = new ConexaoComBanco();
-            Connection connection = ccb.getConnection(); 
+            Connection connection = ccb.getConnection();
             String sql = "SELECT * FROM canais LIMIT 0,10";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel)tbDados.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tbDados.getModel();
             modelo.setNumRows(0);
-                while (rs.next()) {
-                    modelo.addRow(new Object[]{rs.getInt("id_canais"),
-                                               rs.getString("nome_canal"),
-                                               rs.getString("tipo_canal"),
-                                               rs.getString("padrao_autenticacao"),
-                                               rs.getString("token"),
-                                               rs.getString("senha_canal")
-                                                });
-                }
+            while (rs.next()) {
+                modelo.addRow(new Object[]{rs.getInt("id_canais"),
+                    rs.getString("nome_canal"),
+                    rs.getString("tipo_canal"),
+                    rs.getString("padrao_autenticacao")
+                });
+            }
             rs.close();
             connection.close();
             indicePaginaCanais = 0;
-            lbBtnInicio.setEnabled(false);
-            lbBtnPrev.setEnabled(false);
-            
-            if(paginaInicial <= 10){
-                lbBtnNext.setEnabled(false);
-                lbBtnFim.setEnabled(false);
-            }else{
-                lbBtnNext.setEnabled(true);
-                lbBtnFim.setEnabled(true);
+            btnStart.setEnabled(false);
+            btnPrev.setEnabled(false);
+
+            if (paginaInicial <= 10) {
+                btnNext.setEnabled(false);
+                btnEnd.setEnabled(false);
+            } else {
+                btnNext.setEnabled(true);
+                btnEnd.setEnabled(true);
             }
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     private void atualizarTabelaUsu() {
-        
+
         try {
             ConexaoComBanco ccb = new ConexaoComBanco();
-            Connection connection = ccb.getConnection(); 
+            Connection connection = ccb.getConnection();
             String sql = "SELECT * FROM usuario LIMIT 0,10";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            DefaultTableModel model = (DefaultTableModel)tbDadosUsu.getModel();
+            DefaultTableModel model = (DefaultTableModel) tbDadosUsu.getModel();
             model.setNumRows(0);
-                while (rs.next()) {
-                    model.addRow(new Object[]{rs.getInt("id_usuario"),
-                                               rs.getString("nome_usuario"),
-                                               rs.getString("email_usuario"),
-                                               rs.getString("senha_usuario"),
-                                                });
-                }
+            while (rs.next()) {
+                model.addRow(new Object[]{rs.getInt("id_usuario"),
+                    rs.getString("nome_usuario"),
+                    rs.getString("email_usuario"),
+                    rs.getString("senha_usuario"),});
+            }
             rs.close();
             connection.close();
             indicePaginaCanais = 0;
-            lbBtnInicio1.setEnabled(false);
-            lbBtnPrev1.setEnabled(false);
-            if(paginaInicialUsu <= 10){
-                lbBtnNext1.setEnabled(false);
-                lbBtnFim1.setEnabled(false);
-            }else{
-                lbBtnNext1.setEnabled(true);
-                lbBtnFim1.setEnabled(true);
+            btnStart2.setEnabled(false);
+            btnPrev2.setEnabled(false);
+            if (paginaInicialUsu <= 10) {
+                btnNext2.setEnabled(false);
+                btnEnd2.setEnabled(false);
+            } else {
+                btnNext2.setEnabled(true);
+                btnEnd2.setEnabled(true);
             }
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
