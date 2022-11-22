@@ -4,11 +4,22 @@
  */
 package gui;
 
+import conexaobanco.ConexaoComBanco;
+import dao.CanaisDAO;
+import dao.UsuarioDAO;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import modelo.Secao;
 
 /**
  *
@@ -19,21 +30,42 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
     /**
      * Creates new form TelaConfiguracoesConta
      */
+    Connection con = null;
+    Secao secaoUsu = new Secao();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
     public TelaConfiguracoesConta() {
         initComponents();
+        String sql = "SELECT email_user FROM secao where id_user = 1";
+        con = new ConexaoComBanco().getConnection();
+
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                secaoUsu.setEmail_user(rs.getString("email_user"));
+            }
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+
+//        lbNomePerfil.setText(objUsu.getNome_usuario());
+        lbEmailUser.setText((String) secaoUsu.getEmail_user());
     }
-    
+
     class jPanelGradient extends JPanel {
+
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
             int height = getHeight();
-            
+
             Color color1 = new Color(48, 18, 78);
             Color color2 = new Color(200, 88, 51);
             GradientPaint gp = new GradientPaint(850, 0, color1, 0, height, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, width, height);           
+            g2d.fillRect(0, 0, width, height);
         }
     }
 
@@ -49,6 +81,7 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         painelMenu = new jPanelGradient();
         lbLogo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        lbEmailUser = new javax.swing.JLabel();
         painelConfigurar = new javax.swing.JPanel();
         txtNome = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
@@ -65,7 +98,7 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         iconeEmail = new javax.swing.JLabel();
         iconeSenha = new javax.swing.JLabel();
         lbBtnEditar = new javax.swing.JLabel();
-        lbBtnVoltar = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         lbBtnSair = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,23 +111,33 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconePerfil.png"))); // NOI18N
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        lbEmailUser.setForeground(new java.awt.Color(255, 255, 255));
+        lbEmailUser.setText("Teste");
+
         javax.swing.GroupLayout painelMenuLayout = new javax.swing.GroupLayout(painelMenu);
         painelMenu.setLayout(painelMenuLayout);
         painelMenuLayout.setHorizontalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addComponent(lbLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 577, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbEmailUser)
+                .addGap(97, 97, 97))
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                        .addComponent(lbEmailUser)
+                        .addGap(14, 14, 14))))
         );
 
         painelConfigurar.setBackground(new java.awt.Color(249, 250, 251));
@@ -175,11 +218,10 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         lbBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeLapis.png"))); // NOI18N
         lbBtnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        lbBtnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeVoltar.png"))); // NOI18N
-        lbBtnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBtnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBtnVoltarMouseClicked(evt);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeVoltar.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -193,9 +235,9 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addComponent(lbTextoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelConfigurarLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lbBtnVoltar)))
-                .addGap(53, 53, 53)
+                        .addGap(14, 14, 14)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(68, 68, 68)
                 .addComponent(painelLinha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(painelConfigurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,11 +269,11 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
             painelConfigurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelConfigurarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbBtnVoltar)
-                .addGap(135, 135, 135)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(137, 137, 137)
                 .addComponent(lbTextoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(painelLinha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+            .addComponent(painelLinha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
             .addGroup(painelConfigurarLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(painelConfigurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,13 +299,18 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
                     .addComponent(iconeSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65)
                 .addComponent(painelBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         painelConfigurarLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {painelBtnSalvar, txtEmail, txtNome, txtSenha});
 
         lbBtnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeSair.png"))); // NOI18N
         lbBtnSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbBtnSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbBtnSairMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,7 +320,7 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(painelConfigurar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbBtnSair)
@@ -306,10 +353,51 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lbBtnSalvarMouseClicked
 
-    private void lbBtnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnVoltarMouseClicked
-        new TelaConfiguracoesAtivas().setVisible(true);
+    private void lbBtnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnSairMouseClicked
+        // TODO add your handling code here:
+        ConexaoComBanco ccb = new ConexaoComBanco();
+        Connection connection = ccb.getConnection();
+        String sql = "DELETE FROM secao WHERE id_user = 1 ";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Voce Deslogou do Sistema");
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        TelaLogin telaLogin = new TelaLogin();
+        telaLogin.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_lbBtnVoltarMouseClicked
+    }//GEN-LAST:event_lbBtnSairMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            String sql = "SELECT tipo_user FROM secao where id_user = 1";
+            con = new ConexaoComBanco().getConnection();
+
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String tipoUser = rs.getString("tipo_user");
+                secaoUsu.setTipo_user(tipoUser);
+            }
+            String tipoUser = secaoUsu.getTipo_user();
+            if (tipoUser.equals("Admin")) {
+                TelaConfiguracoesAtivas configAdm = new TelaConfiguracoesAtivas();
+                configAdm.setVisible(true);
+                this.dispose();
+            } else if (tipoUser.equals("User")) {
+                TelaConfiguracoesAtivasUser configUser = new TelaConfiguracoesAtivasUser(0);
+                configUser.setVisible(true);
+                this.dispose();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaConfiguracoesConta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,16 +413,24 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoesConta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -350,13 +446,14 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
     private javax.swing.JLabel iconeEmail;
     private javax.swing.JLabel iconeSenha;
     private javax.swing.JLabel iconeUser;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbBotaoEditar;
     private javax.swing.JLabel lbBtnEditar;
     private javax.swing.JLabel lbBtnSair;
     private javax.swing.JLabel lbBtnSalvar;
-    private javax.swing.JLabel lbBtnVoltar;
     private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lbEmailUser;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbSenha;
