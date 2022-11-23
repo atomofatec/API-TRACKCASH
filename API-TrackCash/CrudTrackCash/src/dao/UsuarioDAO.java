@@ -66,7 +66,7 @@ public class UsuarioDAO {
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "E-mail", "Senha"}, 0);
         try {
             String query = ("SELECT * FROM usuario LIMIT " + start + "," + size);
-            System.out.println(query);
+            //System.out.println(query);
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -92,7 +92,7 @@ public class UsuarioDAO {
     public double getRowCountUsu() {
         ConexaoComBanco ccb = new ConexaoComBanco();
         Connection con = ccb.getConnection();
-        /*        con = ConexaoComBanco.getConnection();*/
+        //con = ConexaoComBanco.getConnection();
         long count = 0;
         try {
             String query = "SELECT count(*) FROM usuario ";
@@ -114,34 +114,6 @@ public class UsuarioDAO {
         return count;
     }
 
-//    public boolean checkLogin(String email, String senha){
-//       
-//        
-//        PreparedStatement stmt = null;
-//        ResultSet rs = null;
-//        boolean checagem = false;
-//        
-//        try{
-//            stmt = connection.prepareStatement("SELECT * FROM usuario WHERE email_usuario = ? and senha_usuario = ?");
-//            stmt.setString(1, email);
-//            stmt.setString(2, senha);
-//            rs = stmt.executeQuery();
-//           
-//            if (rs.next()){
-//                checagem = true;
-//            }
-//           
-//        }catch(SQLException ex){
-//            System.out.println("Algo ocorreu errado, tente novamente !");
-//        }finally{
-//            try {
-//                connection.close();
-//            } catch (SQLException ex) {
-//                System.out.println("Algo ocorreu errado, tente novamente !");
-//            }
-//        }
-//        return checagem;
-//    }
     public ResultSet autenticacaoUsuario(Usuario objUsuario) {
         con = new ConexaoComBanco().getConnection();
 

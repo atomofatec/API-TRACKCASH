@@ -49,12 +49,13 @@ public class CanalUserDAO {
         }
     }
 
-    public DefaultTableModel User(int start, int size) {
+    public DefaultTableModel User(int idUsuario, int start, int size) {
 
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nome", "Token", "Usuário", "Senha",}, 0);
         try {
-            String query = ("SELECT * FROM canal_usuario LIMIT " + start + "," + size);
+            String query = ("SELECT * FROM canal_usuario WHERE id_usuario = ? LIMIT " + start + "," + size);
             ps = connection.prepareStatement(query);
+            ps.setInt(1, idUsuario);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idusuario = rs.getInt("id_canal_usuario");
@@ -77,20 +78,21 @@ public class CanalUserDAO {
         return model;
     }
 
-    public double getRowCount() {
+    public double getRowCount(int idUsuario) {
         ConexaoComBanco ccb = new ConexaoComBanco();
         Connection con = ccb.getConnection();
         /*        con = ConexaoComBanco.getConnection();*/
         long count = 0;
         try {
-            String query = "SELECT count(*) FROM canais ";
-            System.out.println(query);
+            String query = "SELECT count(*) FROM canal_usuario WHERE id_usuario = ?";
             ps = con.prepareStatement(query);
+            ps.setInt(1, idUsuario);
             rs = ps.executeQuery();
             while (rs.next()) {
                 count = rs.getLong("count(*)");
 
             }
+            //System.out.println(query + " Quantidade de itens " + count);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

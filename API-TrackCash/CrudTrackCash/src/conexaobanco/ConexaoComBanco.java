@@ -16,7 +16,7 @@ ou outros erros.*/
 public class ConexaoComBanco {
     public Connection getConnection(){
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost/bancoapiii?serverTimezone=UTC","root","fatec");          
+            return DriverManager.getConnection("jdbc:mysql://localhost/bancoapiii?serverTimezone=UTC","root","senhabanco");          
         }
         catch(SQLException excecao){
             throw new RuntimeException(excecao);

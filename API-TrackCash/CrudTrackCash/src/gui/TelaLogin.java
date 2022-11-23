@@ -294,12 +294,13 @@ public class TelaLogin extends javax.swing.JFrame {
                 int idUsuario = rsUsuDAO.getInt("id_usuario");
                 String dadoCbTipo = secaoUsu.getTipo_user();
                 if (dadoCbTipo == "Admin") {
-                    String sql = "INSERT INTO secao(email_user, tipo_user, id_user) VALUES(?, ?, 1)";
+                    String sql = "INSERT INTO secao(email_user, tipo_user, id_user, id_geral) VALUES(?, ?, 1, ?)";
                     con = new ConexaoComBanco().getConnection();
                     try {
                         PreparedStatement stmt = con.prepareStatement(sql);
                         stmt.setString(1, secaoUsu.getEmail_user());
                         stmt.setString(2, secaoUsu.getTipo_user());
+                        stmt.setInt(3, rsUsuDAO.getInt("id_usuario"));
                         stmt.execute();
                     } catch (SQLException u) {
                         System.out.print("Erro no ADM " + u);
@@ -308,12 +309,13 @@ public class TelaLogin extends javax.swing.JFrame {
                     telaAdm.setVisible(true);
                     this.dispose();
                 } else if (dadoCbTipo == "User") {
-                    String sql = "INSERT INTO secao(email_user, tipo_user, id_user) VALUES(?, ?, 1)";
+                    String sql = "INSERT INTO secao(email_user, tipo_user, id_user, id_geral) VALUES(?, ?, 1, ?)";
                     con = new ConexaoComBanco().getConnection();
                     try {
                         PreparedStatement stmt = con.prepareStatement(sql);
                         stmt.setString(1, secaoUsu.getEmail_user());
                         stmt.setString(2, secaoUsu.getTipo_user());
+                        stmt.setInt(3, rsUsuDAO.getInt("id_usuario"));
                         stmt.execute();
                     } catch (SQLException u) {
                         System.out.print("Erro no USER " + u);

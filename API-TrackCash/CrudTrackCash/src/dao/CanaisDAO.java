@@ -75,7 +75,7 @@ public class CanaisDAO {
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Canais", "Tipo", "Padrão Autenticaçao"}, 0);
         try {
             String query = ("SELECT * FROM canais LIMIT " + start + "," + size);
-            System.out.println(query);
+            //System.out.println(query);
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {

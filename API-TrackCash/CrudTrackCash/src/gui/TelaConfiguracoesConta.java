@@ -5,8 +5,7 @@
 package gui;
 
 import conexaobanco.ConexaoComBanco;
-import dao.CanaisDAO;
-import dao.UsuarioDAO;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -20,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import modelo.Secao;
+
 
 /**
  *
@@ -299,7 +299,7 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
                     .addComponent(iconeSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65)
                 .addComponent(painelBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         painelConfigurarLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {painelBtnSalvar, txtEmail, txtNome, txtSenha});
@@ -372,27 +372,36 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
     }//GEN-LAST:event_lbBtnSairMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            String sql = "SELECT tipo_user FROM secao where id_user = 1";
-            con = new ConexaoComBanco().getConnection();
 
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                String tipoUser = rs.getString("tipo_user");
-                secaoUsu.setTipo_user(tipoUser);
-            }
-            String tipoUser = secaoUsu.getTipo_user();
-            if (tipoUser.equals("Admin")) {
-                TelaConfiguracoesAtivas configAdm = new TelaConfiguracoesAtivas();
-                configAdm.setVisible(true);
-                this.dispose();
-            } else if (tipoUser.equals("User")) {
-                TelaConfiguracoesAtivasUser configUser = new TelaConfiguracoesAtivasUser(0);
-                configUser.setVisible(true);
-                this.dispose();
-            }
+
+        int idUsu = 0;
+        try {
+            
+                String sql = "SELECT tipo_user,id_geral FROM secao where id_user = 1";
+                con = new ConexaoComBanco().getConnection();
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String tipoUser = rs.getString("tipo_user");
+                    secaoUsu.setTipo_user(tipoUser);
+                    idUsu = rs.getInt("id_geral");
+                }
+
+                String tipoUser = secaoUsu.getTipo_user();
+
+                if (tipoUser.equals("Admin")) {
+                    TelaConfiguracoesAtivas telaAdm = new TelaConfiguracoesAtivas();
+                    telaAdm.setVisible(true);
+                    this.dispose();
+                } else if (tipoUser.equals("User")) {
+                    TelaConfiguracoesAtivasUser telaUser = new TelaConfiguracoesAtivasUser(idUsu);
+                    telaUser.ObterUsuario(idUsu);
+                    telaUser.setVisible(true);
+                    this.dispose();
+                }
+            this.dispose();
+
         } catch (SQLException ex) {
             Logger.getLogger(TelaConfiguracoesConta.class.getName()).log(Level.SEVERE, null, ex);
         }

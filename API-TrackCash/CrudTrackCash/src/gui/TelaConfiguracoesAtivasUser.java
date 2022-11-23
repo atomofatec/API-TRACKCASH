@@ -36,7 +36,6 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
      * Creates new form TelaConfiguraçõesAtivas
      */
     CanalUserDAO dao = new CanalUserDAO();
-    DefaultTableModel dm = (DefaultTableModel) dao.User(0, 10);
     Connection con = null;
     Secao secaoUsu = new Secao();
     PreparedStatement ps = null;
@@ -44,13 +43,15 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
     int indicePaginaCanaisUsu = 0;
     Usuario usuarioLogado = new Usuario();
     UsuarioDAO usuarioDAO = new UsuarioDAO();
+    DefaultTableModel dm;
     
-    int paginaInicial = (int) dao.getRowCount();
+
     
     public TelaConfiguracoesAtivasUser(int idUsuario) {
-        
         initComponents();
         ObterUsuario(idUsuario);
+        int paginaInicial = (int) dao.getRowCount(idUsuario);
+        this.dm = (DefaultTableModel) dao.User(idUsuario,0, 10);
         atualizarTabelaUser();
         
         String sql = "SELECT email_user FROM secao where id_user = 1";
@@ -94,6 +95,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         Usuario usuario = usuarioDAO.obterUsuarioPorId(idUsuario);
         if (usuario != null) {
             this.usuarioLogado = usuario;
+            usuario.setId_usuario(idUsuario);
         return true;
         }else{
             return false;
@@ -688,6 +690,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
 
     private void lbPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbPerfilMouseClicked
         // TODO add your handling code here:
+        
         TelaConfiguracoesConta telaConfigConta = new TelaConfiguracoesConta();
         telaConfigConta.setVisible(true);
         this.dispose();
@@ -700,8 +703,10 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
 
     private void btnStartUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartUsuActionPerformed
         // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(0, 10);
+        CanalUserDAO dao = new CanalUserDAO();
+        int idUsuario = usuarioLogado.getId_usuario();
+        ObterUsuario(idUsuario);
+        DefaultTableModel pagina = (DefaultTableModel) dao.User(idUsuario,0, 10);
         tbDadosUser.setModel(pagina);
         btnStartUsu.setEnabled(false);
         btnPrevUsu.setEnabled(false);
@@ -717,10 +722,11 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
 
     private void btnNextUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextUsuActionPerformed
         // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-
+        CanalUserDAO dao = new CanalUserDAO();
+        int idUsuario = usuarioLogado.getId_usuario();
+        ObterUsuario(idUsuario);
         //(currentPage, totalPages);
-        int index = (int) dao.getRowCount();
+        int index = (int) dao.getRowCount(idUsuario);
         int tamanho = indicePaginaCanaisUsu + 10;
 
         int resultado = index - tamanho;
@@ -737,7 +743,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
             btnPrevUsu.setEnabled(true);
             btnStartUsu.setEnabled(true);
         }
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
+        DefaultTableModel pagina = (DefaultTableModel) dao.User(idUsuario,tamanho, 10);
         tbDadosUser.setModel(pagina);
     }//GEN-LAST:event_btnNextUsuActionPerformed
 
@@ -749,11 +755,13 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
 
     private void btnPrevUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevUsuActionPerformed
         // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
+        CanalUserDAO dao = new CanalUserDAO();
         //(currentPage, totalPages);
-
         int tamanho = indicePaginaCanaisUsu - 10;
-
+        
+        int idUsuario = usuarioLogado.getId_usuario();
+        ObterUsuario(idUsuario);
+        
         btnNextUsu.setEnabled(true);
         btnEndUsu.setEnabled(true);
 
@@ -764,19 +772,21 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
             btnPrevUsu.setEnabled(true);
             btnStartUsu.setEnabled(true);
         }
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(tamanho, 10);
+        DefaultTableModel pagina = (DefaultTableModel) dao.User(idUsuario,tamanho, 10);
         tbDadosUser.setModel(pagina);
     }//GEN-LAST:event_btnPrevUsuActionPerformed
 
     private void btnEndUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndUsuActionPerformed
         // TODO add your handling code here:
-        CanaisDAO dao = new CanaisDAO();
-        int index = (int) dao.getRowCount();
+        CanalUserDAO dao = new CanalUserDAO();
+        int idUsuario = usuarioLogado.getId_usuario();
+        ObterUsuario(idUsuario);
+        int index = (int) dao.getRowCount(idUsuario);
 
         int valorfinal = index / 10;
         int valortotal = valorfinal * 10;
         System.out.println(valorfinal);
-        DefaultTableModel pagina = (DefaultTableModel) dao.fetchBySize(valortotal, 10);
+        DefaultTableModel pagina = (DefaultTableModel) dao.User(idUsuario,valortotal, 10);
         tbDadosUser.setModel(pagina);
         btnNextUsu.setEnabled(false);
         btnEndUsu.setEnabled(false);
@@ -864,13 +874,14 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void atualizarTabelaUser() {
-
+        int paginaInicial = (int) dao.getRowCount(usuarioLogado.getId_usuario());
         try {
             ConexaoComBanco ccb = new ConexaoComBanco();
             Connection connection = ccb.getConnection();
             String sql = "SELECT * FROM canal_usuario WHERE id_usuario = ? LIMIT 0,10";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, usuarioLogado.getId_usuario());
+            System.out.println(usuarioLogado.getId_usuario());
             ResultSet rs = stmt.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tbDadosUser.getModel();
             modelo.setNumRows(0);
@@ -901,7 +912,7 @@ public class TelaConfiguracoesAtivasUser extends JFrame {
         }           
 
     }
-    Vector<String> nome_canal = new Vector<String>();
+    //Vector<String> nome_canal = new Vector<String>();
 
     public void restaurarDadosComboBoxCanais() {
         try {
