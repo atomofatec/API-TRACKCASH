@@ -1,0 +1,1 @@
+SELECT * FROM bancoapiii.secao;
