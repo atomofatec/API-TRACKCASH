@@ -31,7 +31,7 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
-        
+        btnEsconderSenha.setVisible(false);
     }
     Connection con = null;
     
@@ -74,6 +74,8 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cbTipoUser = new javax.swing.JComboBox<>();
+        btnEsconderSenha = new javax.swing.JButton();
+        btnMostrarSenha = new javax.swing.JButton();
         lbLogo = new javax.swing.JLabel();
         lbTxtPrincipal = new javax.swing.JLabel();
         lbTxtInfo = new javax.swing.JLabel();
@@ -103,7 +105,7 @@ public class TelaLogin extends javax.swing.JFrame {
         lbBtnAcessar.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnAcessar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnAcessar.setText("Acessar sistema");
-        lbBtnAcessar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbBtnAcessar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lbBtnAcessar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbBtnAcessarMouseClicked(evt);
@@ -129,7 +131,7 @@ public class TelaLogin extends javax.swing.JFrame {
         lbBtnCadastrar.setForeground(new java.awt.Color(48, 18, 78));
         lbBtnCadastrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnCadastrar.setText("Cadastre-se");
-        lbBtnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbBtnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lbBtnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbBtnCadastrarMouseClicked(evt);
@@ -141,6 +143,20 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeSenha.png"))); // NOI18N
 
         cbTipoUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Admin", "User" }));
+
+        btnEsconderSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeOlhoFechado.png"))); // NOI18N
+        btnEsconderSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsconderSenhaActionPerformed(evt);
+            }
+        });
+
+        btnMostrarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeOlhoAberto.png"))); // NOI18N
+        btnMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarSenhaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelLoginLayout = new javax.swing.GroupLayout(painelLogin);
         painelLogin.setLayout(painelLoginLayout);
@@ -168,7 +184,11 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addComponent(painelBtnAcessar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbTipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(92, 92, 92))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMostrarSenha, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEsconderSenha))
+                .addGap(50, 50, 50))
         );
 
         painelLoginLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {painelBtnAcessar, txtEmailLogin, txtSenha});
@@ -189,8 +209,12 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelLoginLayout.createSequentialGroup()
+                        .addComponent(btnEsconderSenha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMostrarSenha)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(cbTipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(painelBtnAcessar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,6 +369,18 @@ public class TelaLogin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lbBtnCadastrarMouseClicked
 
+    private void btnEsconderSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsconderSenhaActionPerformed
+        txtSenha.setEchoChar('*'); // Com echo char, é possível definir um caractere que aparecerá sempre que um usuário digitar a senha no JPasswordField.
+        btnMostrarSenha.setVisible(true);
+        btnEsconderSenha.setVisible(false);
+    }//GEN-LAST:event_btnEsconderSenhaActionPerformed
+
+    private void btnMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarSenhaActionPerformed
+        txtSenha.setEchoChar('\u0000'); //Aqui é onde definimos o JPassoword para colocar a senha vísivel. Um char tem um valor padrão de 'u0000'.
+        btnMostrarSenha.setVisible(false);
+        btnEsconderSenha.setVisible(true);
+    }//GEN-LAST:event_btnMostrarSenhaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -379,6 +415,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEsconderSenha;
+    private javax.swing.JButton btnMostrarSenha;
     private javax.swing.JComboBox<String> cbTipoUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

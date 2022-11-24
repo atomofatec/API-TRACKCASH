@@ -35,6 +35,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     public TelaCadastro() {
         initComponents();
+        btnEsconderSenha.setVisible(false);
     }
 
     class jPanelGradient extends JPanel {
@@ -66,7 +67,6 @@ public class TelaCadastro extends javax.swing.JFrame {
         painelCadastro = new javax.swing.JPanel();
         txtNome = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
         txtCofirmSenha = new javax.swing.JTextField();
         lbNome = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
@@ -79,6 +79,9 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
+        btnEsconderSenha = new javax.swing.JButton();
+        btnMostrarSenha = new javax.swing.JButton();
         lbLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,7 +91,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         painelCadastro.setBackground(new java.awt.Color(249, 250, 251));
         painelCadastro.setPreferredSize(new java.awt.Dimension(400, 520));
 
-        txtNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtNome.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
@@ -98,12 +101,6 @@ public class TelaCadastro extends javax.swing.JFrame {
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
-            }
-        });
-
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
             }
         });
 
@@ -140,7 +137,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
         btnCadastrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnCadastrar.setText("Cadastrar");
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCadastrarMouseClicked(evt);
@@ -162,7 +159,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         btnVoltarLogin.setForeground(new java.awt.Color(48, 18, 78));
         btnVoltarLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnVoltarLogin.setText("Já tem uma conta?");
-        btnVoltarLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVoltarLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnVoltarLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVoltarLoginMouseClicked(evt);
@@ -175,6 +172,20 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeSenha.png"))); // NOI18N
 
+        btnEsconderSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeOlhoFechado.png"))); // NOI18N
+        btnEsconderSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsconderSenhaActionPerformed(evt);
+            }
+        });
+
+        btnMostrarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeOlhoAberto.png"))); // NOI18N
+        btnMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelCadastroLayout = new javax.swing.GroupLayout(painelCadastro);
         painelCadastro.setLayout(painelCadastroLayout);
         painelCadastroLayout.setHorizontalGroup(
@@ -182,45 +193,52 @@ public class TelaCadastro extends javax.swing.JFrame {
             .addGroup(painelCadastroLayout.createSequentialGroup()
                 .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(lbTextoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(painelCadastroLayout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(110, 110, 110)
+                                    .addComponent(lbTextoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(lbNome))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(70, 70, 70)
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(lbEmail))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(69, 69, 69)
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(lbSenha))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(lbConfirmSenha))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(txtCofirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(painelCadastroLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(painelBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMostrarSenha)
+                            .addComponent(btnEsconderSenha, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(lbNome))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(lbEmail))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(lbSenha))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(lbConfirmSenha))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(txtCofirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(painelBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(89, 89, 89))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroLayout.createSequentialGroup()
-                .addComponent(btnVoltarLogin)
-                .addGap(128, 128, 128))
+                        .addGap(131, 131, 131)
+                        .addComponent(btnVoltarLogin)))
+                .addContainerGap())
         );
         painelCadastroLayout.setVerticalGroup(
             painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,19 +259,31 @@ public class TelaCadastro extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addComponent(lbSenha)
-                .addGap(2, 2, 2)
                 .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(lbConfirmSenha)
-                .addGap(2, 2, 2)
-                .addComponent(txtCofirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(painelBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(painelCadastroLayout.createSequentialGroup()
+                        .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelCadastroLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelCadastroLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbConfirmSenha)
+                        .addGap(2, 2, 2)
+                        .addComponent(txtCofirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(painelBtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelCadastroLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMostrarSenha)
+                            .addGroup(painelCadastroLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEsconderSenha)))))
+                .addGap(18, 18, 18)
                 .addComponent(btnVoltarLogin)
-                .addContainerGap())
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -305,10 +335,6 @@ public class TelaCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
-
     private void txtCofirmSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCofirmSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCofirmSenhaActionPerformed
@@ -341,6 +367,18 @@ public class TelaCadastro extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVoltarLoginMouseClicked
+
+    private void btnEsconderSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsconderSenhaActionPerformed
+        txtSenha.setEchoChar('*'); // Com echo char, é possível definir um caractere que aparecerá sempre que um usuário digitar a senha no JPasswordField.
+        btnMostrarSenha.setVisible(true);
+        btnEsconderSenha.setVisible(false);
+    }//GEN-LAST:event_btnEsconderSenhaActionPerformed
+
+    private void btnMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarSenhaActionPerformed
+        txtSenha.setEchoChar('\u0000'); //Aqui é onde definimos o JPassoword para colocar a senha vísivel. Um char tem um valor padrão de 'u0000'.
+        btnMostrarSenha.setVisible(false);
+        btnEsconderSenha.setVisible(true);
+    }//GEN-LAST:event_btnMostrarSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,6 +421,8 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnCadastrar;
+    private javax.swing.JButton btnEsconderSenha;
+    private javax.swing.JButton btnMostrarSenha;
     private javax.swing.JLabel btnVoltarLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -399,6 +439,6 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField txtCofirmSenha;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

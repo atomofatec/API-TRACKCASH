@@ -84,57 +84,68 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
-                              <Component id="lbTextoCadastro" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtSenha" min="-2" pref="212" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
+                                          <Component id="lbTextoCadastro" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
+                                          <Component id="lbNome" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txtNome" min="-2" pref="211" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
+                                          <Component id="lbEmail" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txtEmail" min="-2" pref="211" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
+                                          <Component id="lbSenha" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
+                                          <Component id="lbConfirmSenha" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
+                                          <Component id="txtCofirmSenha" min="-2" pref="211" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
+                                          <Component id="painelBtnCadastrar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnMostrarSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEsconderSenha" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="lbNome" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtNome" min="-2" pref="211" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="lbEmail" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtEmail" min="-2" pref="211" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="lbSenha" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtSenha" min="-2" pref="211" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="lbConfirmSenha" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="txtCofirmSenha" min="-2" pref="211" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="painelBtnCadastrar" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                              <Component id="btnVoltarLogin" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnVoltarLogin" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -159,20 +170,39 @@
                       </Group>
                       <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                       <Component id="lbSenha" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtSenha" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" pref="36" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtSenha" min="-2" pref="34" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="lbConfirmSenha" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                              <Component id="txtCofirmSenha" min="-2" pref="36" max="-2" attributes="0"/>
+                              <EmptySpace min="24" pref="24" max="-2" attributes="0"/>
+                              <Component id="painelBtnCadastrar" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnMostrarSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace pref="16" max="-2" attributes="0"/>
+                                      <Component id="btnEsconderSenha" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
-                      <Component id="lbConfirmSenha" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                      <Component id="txtCofirmSenha" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace min="24" pref="24" max="-2" attributes="0"/>
-                      <Component id="painelBtnCadastrar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnVoltarLogin" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="27" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -181,7 +211,7 @@
             <Component class="javax.swing.JTextField" name="txtNome">
               <Properties>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Text Cursor"/>
+                  <Color id="Cursor Padr&#xe3;o"/>
                 </Property>
               </Properties>
               <Events>
@@ -191,11 +221,6 @@
             <Component class="javax.swing.JTextField" name="txtEmail">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtSenha">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSenhaActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCofirmSenha">
@@ -292,7 +317,7 @@
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Cadastrar"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Hand Cursor"/>
+                      <Color id="Cursor Padr&#xe3;o"/>
                     </Property>
                   </Properties>
                   <Events>
@@ -312,7 +337,7 @@
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="J&#xe1; tem uma conta?"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Padr&#xe3;o"/>
                 </Property>
               </Properties>
               <Events>
@@ -339,6 +364,28 @@
                   <Image iconType="3" name="/images/iconeSenha.png"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JPasswordField" name="txtSenha">
+            </Component>
+            <Component class="javax.swing.JButton" name="btnEsconderSenha">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/iconeOlhoFechado.png"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEsconderSenhaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMostrarSenha">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/iconeOlhoAberto.png"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarSenhaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
