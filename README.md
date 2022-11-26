@@ -23,7 +23,7 @@
   
 ## :clipboard: O Projeto
 
-> **Status do Projeto: Em andamento**
+> **Status do Projeto: Concluído**
 - Nossos clientes são vendedores de lojas online e físicas e para que possamos realizar nosso processo de conciliação financeira precisamos das informações destas vendas, para isso, estes clientes precisam realizar uma serie de configurações - nos dando autorização, para que nossos sistemas possam acessar: apis e planilhas de forma automatizada. Estas autorizações acontecem pela recepção de tokens e usuários de acesso, portanto, este sistema será responsável por salvar estas informações de usuário/senha e tokens.
 
 <br>
@@ -87,19 +87,25 @@
   
 <h3>1ª Sprint</h3>
 
-<h1 align="center"> <img src = "readme/grafico-burndown.PNG" height=350px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint-1.PNG" height=350px width=auto></h1> 
 
 <br>
   
 <h3>2ª Sprint</h3>
 
-<h1 align="center"> <img src = "readme/grafico-burndown-sprint2.jpeg" height=350px width=auto></h1>
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint-2.jpeg" height=350px width=auto></h1>
   
 <br>
  
 <h3>3ª Sprint</h3>
 
-<h1 align="center"> <img src = "readme/grafico-burndown-sprint-3.JPG" height=350px width=auto></h1> 
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint-3.JPG" height=350px width=auto></h1>
+
+<br>
+ 
+<h3>4ª Sprint</h3>
+
+(Imagem) 
 
 <br>
 
@@ -132,6 +138,12 @@ https://user-images.githubusercontent.com/100942191/194786107-55f791e1-a1fd-4db5
 https://user-images.githubusercontent.com/100942191/200201416-09cbe66d-5015-4b48-9acf-1a1cef44c08c.mp4
 
 <br>
+
+<h3>4ª Sprint - 07/11 a 27/11</h3>
+
+(Vídeo)
+
+<br>
   
 <span id="modelo-de-dados-relacional">
 
@@ -139,13 +151,13 @@ https://user-images.githubusercontent.com/100942191/200201416-09cbe66d-5015-4b48
 
 <h3>Modelo Conceitual</h3>
     
-<h1 align="center"> <img src = "readme/DER - Modelo Relacional.png" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/der-modelo-relacional.png" height=auto width=800px></h1>
 
 <br>
 
 <h3>Modelo Lógico</h3>
 
-<h1 align="center"> <img src = "readme/DER - Modelo Lógico.png" height=auto width=800px></h1>
+<h1 align="center"> <img src = "readme/der-modelo-lógico.png" height=auto width=800px></h1>
 
 <br>
   
