@@ -141,7 +141,7 @@ https://user-images.githubusercontent.com/100942191/200201416-09cbe66d-5015-4b48
 
 <h3>4ª Sprint - 07/11 a 27/11</h3>
 
-(Vídeo)
+Vídeo
 
 <br>
   
