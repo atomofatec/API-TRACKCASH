@@ -5,6 +5,7 @@
 package gui;
 
 import conexaobanco.ConexaoComBanco;
+import dao.UsuarioDAO;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import modelo.Secao;
+import modelo.Usuario;
 
 
 /**
@@ -34,6 +36,7 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
     Secao secaoUsu = new Secao();
     PreparedStatement ps = null;
     ResultSet rs = null;
+    int idUsuario = idUsu();
 
     public TelaConfiguracoesConta() {
         initComponents();
@@ -49,10 +52,65 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         } catch (SQLException u) {
             throw new RuntimeException(u);
         }
+        
+        String sqlId = "SELECT * FROM usuario where id_usuario =" + idUsuario + "";
+        
+        try {
+            ps = con.prepareStatement(sqlId);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                txtNome.setText(rs.getString("nome_usuario"));
+                txtEmail.setText(rs.getString("email_usuario"));
+                txtSenha.setText(rs.getString("senha_usuario"));
+            }
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
 
 //        lbNomePerfil.setText(objUsu.getNome_usuario());
         lbEmailUser.setText((String) secaoUsu.getEmail_user());
+        
+        txtNome.setEnabled(false);
+        txtEmail.setEnabled(false);
+        txtSenha.setEnabled(false);
     }
+    
+    public int idUsu() {
+        String sqlIdG = "SELECT id_geral FROM secao where id_user = 1";
+        con = new ConexaoComBanco().getConnection();
+        int idEditUser = 0;
+
+        try {
+            ps = con.prepareStatement(sqlIdG);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idEditUser = rs.getInt("id_geral");
+            }
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+        return idEditUser;
+    }
+    
+    public boolean updatePerfil(Usuario usuario) {
+        String sqlUpdate = "UPDATE usuario SET nome_usuario = ?, email_usuario = ?,senha_usuario = ? WHERE id_usuario =" + idUsuario + "";
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement(sqlUpdate);
+            stmt.setString(1, usuario.getNome_usuario());
+            stmt.setString(2, usuario.getEmail_usuario());
+            stmt.setString(3, usuario.getSenha_usuario());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.err.println("Erro!" + ex);
+            return false;
+        }
+    }
+    
 
     class jPanelGradient extends JPanel {
 
@@ -111,6 +169,7 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconePerfil.png"))); // NOI18N
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        lbEmailUser.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         lbEmailUser.setForeground(new java.awt.Color(255, 255, 255));
         lbEmailUser.setText("Teste");
 
@@ -120,34 +179,35 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addComponent(lbLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 577, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbEmailUser)
-                .addGap(97, 97, 97))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(painelMenuLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
-                        .addComponent(lbEmailUser)
-                        .addGap(14, 14, 14))))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelMenuLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lbEmailUser)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelConfigurar.setBackground(new java.awt.Color(249, 250, 251));
 
+        txtNome.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
             }
         });
 
+        txtEmail.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -165,6 +225,8 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         lbSenha.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         lbSenha.setForeground(new java.awt.Color(51, 51, 51));
         lbSenha.setText("Senha:");
+
+        txtSenha.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
 
         lbBotaoEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -217,8 +279,15 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
 
         lbBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeLapis.png"))); // NOI18N
         lbBtnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbBtnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbBtnEditarMouseClicked(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconeVoltar.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -350,7 +419,20 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void lbBtnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnSalvarMouseClicked
-        // TODO add your handling code here:
+        Usuario usuario = new Usuario();
+        UsuarioDAO daoUsu = new UsuarioDAO();
+
+        usuario.setNome_usuario(txtNome.getText());
+        usuario.setEmail_usuario(txtEmail.getText());
+        usuario.setSenha_usuario(txtSenha.getText());
+
+        updatePerfil(usuario);
+        
+        JOptionPane.showMessageDialog(null, "Informações editadas com sucesso!");
+        
+        txtNome.setEnabled(false);
+        txtEmail.setEnabled(false);
+        txtSenha.setEnabled(false);
     }//GEN-LAST:event_lbBtnSalvarMouseClicked
 
     private void lbBtnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnSairMouseClicked
@@ -407,6 +489,12 @@ public class TelaConfiguracoesConta extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void lbBtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnEditarMouseClicked
+        txtNome.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtSenha.setEnabled(true);
+    }//GEN-LAST:event_lbBtnEditarMouseClicked
 
     /**
      * @param args the command line arguments

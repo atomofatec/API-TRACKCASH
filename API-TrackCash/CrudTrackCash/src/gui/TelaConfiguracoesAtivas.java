@@ -197,6 +197,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
             }
         });
 
+        lbEmailPefil.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         lbEmailPefil.setForeground(new java.awt.Color(255, 255, 255));
         lbEmailPefil.setText("Teste");
 
@@ -206,23 +207,27 @@ public class TelaConfiguracoesAtivas extends JFrame {
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMenuLayout.createSequentialGroup()
                 .addComponent(lbLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 541, Short.MAX_VALUE)
-                .addComponent(lbBtnPerfil)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbEmailPefil)
-                .addGap(113, 113, 113))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbBtnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         painelMenuLayout.setVerticalGroup(
             painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(lbBtnPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-            .addGroup(painelMenuLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(lbEmailPefil)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbBtnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 58, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMenuLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lbEmailPefil)
+                        .addGap(20, 20, 20)))
+                .addContainerGap())
         );
 
-        lbTexto.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        lbTexto.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         lbTexto.setText("<html>\n<body style=\"text-align:center\">\nOlá, seja bem vindo! Aqui você pode visualizar, editar ou adicionar os canais cadastrados na\n<br>\n tabela abaixo!\n</body>\n</html>");
 
         painelFundo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -248,6 +253,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
         PainelTabelaUsers.setBackground(new java.awt.Color(232, 232, 232));
         PainelTabelaUsers.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        campoBuscaUser.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         campoBuscaUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoBuscaUserjTextField_pesqActionPerformed(evt);
@@ -263,6 +269,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
         PainelTabelaUsers.add(campoBuscaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 740, 30));
 
+        tbDadosUsu.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         tbDadosUsu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -309,9 +316,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnStart2.setBackground(new java.awt.Color(217, 90, 48));
-        btnStart2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnStart2.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnStart2.setForeground(new java.awt.Color(255, 255, 255));
-        btnStart2.setText("Inicio");
+        btnStart2.setText("Início");
+        btnStart2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnStart2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStart2ActionPerformed(evt);
@@ -319,9 +327,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnNext2.setBackground(new java.awt.Color(217, 90, 48));
-        btnNext2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNext2.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnNext2.setForeground(new java.awt.Color(255, 255, 255));
         btnNext2.setText(">>");
+        btnNext2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNext2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnNext2MouseClicked(evt);
@@ -334,9 +343,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnPrev2.setBackground(new java.awt.Color(217, 90, 48));
-        btnPrev2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPrev2.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnPrev2.setForeground(new java.awt.Color(255, 255, 255));
         btnPrev2.setText("<<");
+        btnPrev2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPrev2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPrev2MouseClicked(evt);
@@ -349,9 +359,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnEnd2.setBackground(new java.awt.Color(217, 90, 48));
-        btnEnd2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEnd2.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnEnd2.setForeground(new java.awt.Color(255, 255, 255));
         btnEnd2.setText("Fim");
+        btnEnd2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEnd2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnd2ActionPerformed(evt);
@@ -373,8 +384,11 @@ public class TelaConfiguracoesAtivas extends JFrame {
                 .addComponent(btnNext2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEnd2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        painelNaveg2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEnd2, btnNext2, btnPrev2, btnStart2});
+
         painelNaveg2Layout.setVerticalGroup(
             painelNaveg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelNaveg2Layout.createSequentialGroup()
@@ -391,13 +405,16 @@ public class TelaConfiguracoesAtivas extends JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PainelTabelaUsers.add(painelNaveg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 310, 40));
+        painelNaveg2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEnd2, btnNext2, btnPrev2, btnStart2});
+
+        PainelTabelaUsers.add(painelNaveg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 340, 40));
 
         painelFundo.add(PainelTabelaUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 880, 340));
 
         PainelTabelaAdm.setBackground(new java.awt.Color(232, 232, 232));
         PainelTabelaAdm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        campoBusca.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         campoBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_pesqActionPerformed(evt);
@@ -413,6 +430,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
         PainelTabelaAdm.add(campoBusca, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 742, 30));
 
+        tbDados.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         tbDados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -444,7 +462,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
         painelNaveg.setBackground(new java.awt.Color(232, 232, 232));
 
         btnAtualizarTabela.setBackground(new java.awt.Color(232, 232, 232));
-        btnAtualizarTabela.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAtualizarTabela.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnAtualizarTabela.setForeground(new java.awt.Color(255, 255, 255));
         btnAtualizarTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/atualizar.png"))); // NOI18N
         btnAtualizarTabela.setBorder(null);
@@ -456,9 +474,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnStart.setBackground(new java.awt.Color(217, 90, 48));
-        btnStart.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnStart.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnStart.setForeground(new java.awt.Color(255, 255, 255));
         btnStart.setText("Inicio");
+        btnStart.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStartActionPerformed(evt);
@@ -466,9 +485,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnNext.setBackground(new java.awt.Color(217, 90, 48));
-        btnNext.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNext.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnNext.setForeground(new java.awt.Color(255, 255, 255));
         btnNext.setText(">>");
+        btnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnNextMouseClicked(evt);
@@ -481,9 +501,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnPrev.setBackground(new java.awt.Color(217, 90, 48));
-        btnPrev.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPrev.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnPrev.setForeground(new java.awt.Color(255, 255, 255));
         btnPrev.setText("<<");
+        btnPrev.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPrev.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPrevMouseClicked(evt);
@@ -496,9 +517,10 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
 
         btnEnd.setBackground(new java.awt.Color(217, 90, 48));
-        btnEnd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEnd.setFont(new java.awt.Font("Inter", 1, 11)); // NOI18N
         btnEnd.setForeground(new java.awt.Color(255, 255, 255));
         btnEnd.setText("Fim");
+        btnEnd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEnd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEndActionPerformed(evt);
@@ -520,8 +542,11 @@ public class TelaConfiguracoesAtivas extends JFrame {
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        painelNavegLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEnd, btnNext, btnPrev, btnStart});
+
         painelNavegLayout.setVerticalGroup(
             painelNavegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelNavegLayout.createSequentialGroup()
@@ -538,7 +563,9 @@ public class TelaConfiguracoesAtivas extends JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PainelTabelaAdm.add(painelNaveg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 310, 40));
+        painelNavegLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEnd, btnNext, btnPrev, btnStart});
+
+        PainelTabelaAdm.add(painelNaveg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 340, 40));
 
         lbPesquiUser2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
         PainelTabelaAdm.add(lbPesquiUser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 30, 30));
@@ -548,11 +575,17 @@ public class TelaConfiguracoesAtivas extends JFrame {
         PainelConfigUser.setBackground(new java.awt.Color(249, 250, 251));
         PainelConfigUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbNomeUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbNomeUser.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        lbNomeUser.setForeground(new java.awt.Color(51, 51, 51));
         lbNomeUser.setText("Nome :");
         PainelConfigUser.add(lbNomeUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 30, -1, -1));
+
+        txtNomeUser.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        txtNomeUser.setForeground(new java.awt.Color(51, 51, 51));
         PainelConfigUser.add(txtNomeUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 52, 239, -1));
 
+        txtEmail.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        txtEmail.setForeground(new java.awt.Color(51, 51, 51));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -560,14 +593,18 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
         PainelConfigUser.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 152, -1));
 
-        lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbEmail.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        lbEmail.setForeground(new java.awt.Color(51, 51, 51));
         lbEmail.setText("E-mail : ");
         PainelConfigUser.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
 
-        lbSenhaUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbSenhaUser.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        lbSenhaUser.setForeground(new java.awt.Color(51, 51, 51));
         lbSenhaUser.setText("Senha : ");
         PainelConfigUser.add(lbSenhaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, -1, -1));
 
+        txtSenhaUser.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        txtSenhaUser.setForeground(new java.awt.Color(51, 51, 51));
         txtSenhaUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSenhaUserActionPerformed(evt);
@@ -579,7 +616,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         painelBtnAddUser.setBackground(new java.awt.Color(200, 88, 51));
 
-        lbBtnAddUser.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbBtnAddUser.setFont(new java.awt.Font("Inter", 1, 13)); // NOI18N
         lbBtnAddUser.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnAddUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnAddUser.setText("ADICIONAR");
@@ -603,7 +640,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         painelBtnEditarUser.setBackground(new java.awt.Color(200, 88, 51));
 
-        lbBtnEditarUser.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbBtnEditarUser.setFont(new java.awt.Font("Inter", 1, 13)); // NOI18N
         lbBtnEditarUser.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnEditarUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnEditarUser.setText("EDITAR");
@@ -631,7 +668,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         painelBtnExcluirUser.setBackground(new java.awt.Color(200, 88, 51));
 
-        lbBtnExcluirUser.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbBtnExcluirUser.setFont(new java.awt.Font("Inter", 1, 13)); // NOI18N
         lbBtnExcluirUser.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnExcluirUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnExcluirUser.setText("EXCLUIR");
@@ -688,17 +725,23 @@ public class TelaConfiguracoesAtivas extends JFrame {
         PainelConfigAdm.setBackground(new java.awt.Color(249, 250, 251));
         PainelConfigAdm.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbNomeCanal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbNomeCanal.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        lbNomeCanal.setForeground(new java.awt.Color(51, 51, 51));
         lbNomeCanal.setText("Nome :");
         PainelConfigAdm.add(lbNomeCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+
+        txtNomeCanal.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        txtNomeCanal.setForeground(new java.awt.Color(51, 51, 51));
         PainelConfigAdm.add(txtNomeCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 239, -1));
 
-        lbTipoCanal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbTipoCanal.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        lbTipoCanal.setForeground(new java.awt.Color(51, 51, 51));
         lbTipoCanal.setText("Tipo :");
         PainelConfigAdm.add(lbTipoCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
-        cbTipoCanal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MarketPlace", "PlataformaERP", "Forma de Pagamento" }));
+        cbTipoCanal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "MarketPlace", "PlataformaERP", "Forma de Pagamento" }));
         cbTipoCanal.setBorder(null);
+        cbTipoCanal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbTipoCanal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoCanalActionPerformed(evt);
@@ -706,12 +749,14 @@ public class TelaConfiguracoesAtivas extends JFrame {
         });
         PainelConfigAdm.add(cbTipoCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 147, -1));
 
-        lbPadraoAutenticacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPadraoAutenticacao.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        lbPadraoAutenticacao.setForeground(new java.awt.Color(51, 51, 51));
         lbPadraoAutenticacao.setText("Padrão Autenticação :");
         PainelConfigAdm.add(lbPadraoAutenticacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, -1, -1));
 
         cbPadraoAutenticacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar...", "Token", "Senha" }));
         cbPadraoAutenticacao.setBorder(null);
+        cbPadraoAutenticacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbPadraoAutenticacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbPadraoAutenticacaoActionPerformed(evt);
@@ -723,7 +768,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         painelBtnAdd.setBackground(new java.awt.Color(200, 88, 51));
 
-        lbBtnAdd.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbBtnAdd.setFont(new java.awt.Font("Inter", 1, 13)); // NOI18N
         lbBtnAdd.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnAdd.setText("ADICIONAR");
@@ -747,7 +792,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         painelBtnEditar.setBackground(new java.awt.Color(200, 88, 51));
 
-        lbBtnEditar.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbBtnEditar.setFont(new java.awt.Font("Inter", 1, 13)); // NOI18N
         lbBtnEditar.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnEditar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnEditar.setText("EDITAR");
@@ -775,7 +820,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
 
         painelBtnExcluir.setBackground(new java.awt.Color(200, 88, 51));
 
-        lbBtnExcluir.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbBtnExcluir.setFont(new java.awt.Font("Inter", 1, 13)); // NOI18N
         lbBtnExcluir.setForeground(new java.awt.Color(255, 255, 255));
         lbBtnExcluir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbBtnExcluir.setText("EXCLUIR");
@@ -834,9 +879,9 @@ public class TelaConfiguracoesAtivas extends JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 977, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
+                    .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(211, 211, 211)
@@ -847,7 +892,7 @@ public class TelaConfiguracoesAtivas extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(lbTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -961,7 +1006,12 @@ public class TelaConfiguracoesAtivas extends JFrame {
             daoUsu.adicionaUsuario(usuario);
             JOptionPane.showMessageDialog(null, "Usuario " + txtNomeUser.getText() + " Cadastrado com sucesso !");
         }
+        txtNomeUser.setText("");
+        txtEmail.setText("");
+        txtSenhaUser.setText("");
+        
         atualizarTabelaUsu();
+        
     }//GEN-LAST:event_lbBtnAddUserMouseClicked
 
     private void lbBtnExcluirUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBtnExcluirUserMouseClicked
@@ -984,6 +1034,11 @@ public class TelaConfiguracoesAtivas extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }
+        
+        txtNomeUser.setText("");
+        txtEmail.setText("");
+        txtSenhaUser.setText("");
+        
         atualizarTabelaUsu();
     }//GEN-LAST:event_lbBtnExcluirUserMouseClicked
 
@@ -1016,6 +1071,8 @@ public class TelaConfiguracoesAtivas extends JFrame {
             dao.saveusu(canais);
             JOptionPane.showMessageDialog(null, "Canal " + txtNomeCanal.getText() + " Cadastrado com sucesso !");
             txtNomeCanal.setText("");
+            cbTipoCanal.setSelectedIndex(0);
+            cbPadraoAutenticacao.setSelectedIndex(0);
             atualizarTabela();
         }
     }//GEN-LAST:event_lbBtnAddMouseClicked
@@ -1036,6 +1093,8 @@ public class TelaConfiguracoesAtivas extends JFrame {
             dao.update(canais);
 
             txtNomeCanal.setText("");
+            cbTipoCanal.setSelectedIndex(0);
+            cbPadraoAutenticacao.setSelectedIndex(0);
 
             atualizarTabela();
         } else {
@@ -1063,6 +1122,11 @@ public class TelaConfiguracoesAtivas extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha");
         }
+        
+        txtNomeCanal.setText("");
+        cbTipoCanal.setSelectedIndex(0);
+        cbPadraoAutenticacao.setSelectedIndex(0);
+            
         atualizarTabela();
     }//GEN-LAST:event_lbBtnExcluirMouseClicked
 
