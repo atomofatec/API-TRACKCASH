@@ -105,7 +105,7 @@
  
 <h3>4ª Sprint</h3>
 
-(Imagem) 
+<h1 align="center"> <img src = "readme/grafico-burndown-sprint-4.PNG" height=350px width=auto></h1>
 
 <br>
 
